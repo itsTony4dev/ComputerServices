@@ -10,9 +10,13 @@ body {
 }
 
 header {
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.801), rgb(0, 0, 0));
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.863),
+    rgb(0, 0, 0)
+  );
   color: #fff;
-  padding: 20px;
+  padding: 16px;
 }
 
 nav {
@@ -53,7 +57,25 @@ nav {
   color: #fff;
   text-decoration: none;
   font-size: large;
+  position: relative;
 }
+
+.nav-links a::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2.5px; /* Thickness of the line */
+  background-color: red; /* Color of the line */
+  transition: width 0.4s ease; /* Smooth transition */
+  position: absolute;
+  bottom: -7px; /* Position the line just below the text */
+  left: 0;
+}
+
+.nav-links a:hover::after {
+  width: 100%; /* Extend the line fully when hovered */
+}
+
 .nav-links a:hover {
   color: red;
 }
@@ -66,7 +88,6 @@ nav {
   height: 500px;
   padding: 80px 20px;
   text-align: center;
-  border: 3px solid red;
 }
 
 .hero h1 {
@@ -77,7 +98,7 @@ nav {
 }
 
 .hero p {
-  background-color: red;
+  background-color: #800;
   color: #fff;
   font-size: 18px;
   margin-bottom: 30px;
@@ -114,6 +135,12 @@ main section:nth-child(2) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 50px;
+  max-width: 1580px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .component-card {
@@ -121,6 +148,11 @@ main section:nth-child(2) {
   padding: 20px;
   text-align: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.component-card:hover{
+  transform: scale(1.05);
 }
 
 .component-card img {

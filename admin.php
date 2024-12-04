@@ -22,7 +22,12 @@
                     <li><a href="#">Home</a></li>
                     <li><a href="#buy-Build">Buy</a></li>
                     <li><a href="#contact">Repair</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <?php session_start();
+                    if ($_SESSION['is_logged_in']) {
+                        echo '<li><a href="logout.php">Logout</a></li>';
+                    } else {
+                        echo '<li><a href="login.php">Login</a></li>';
+                    } ?>
                 </ul>
             </div>
         </nav>

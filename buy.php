@@ -13,15 +13,21 @@
     <header>
         <nav>
             <div class="logo">
-                <a href="index.php"><img src="pictures/Logo.png" alt=""></a>
-                <a href="index.php">CT ZONE</a>
+                <a href="home.php"><img src="pictures/Logo.png" alt=""></a>
+                <a href="home.php">CT ZONE</a>
             </div>
             <div class="nav-links">
                 <ul>
                     <li><a href="home.php">Home</a></li>
-                    <li><a href="index.php#buy-Build">Buy </a></li>
-                    <li><a href="index.php#contact">Repair</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <li><a href="home.php#buy-Build">Buy </a></li>
+                    <li><a href="home.php#contact">Repair</a></li>
+                    <?php session_start();
+                    if ($_SESSION['is_logged_in']) {
+                        echo '<li><a href="logout.php">Logout</a></li>';
+                    } else {
+                        echo '<li><a href="login.php">Login</a></li>';
+                    } ?>
+                    <li><a href="cart.php">Cart</a></li>
                 </ul>
             </div>
         </nav>
@@ -44,14 +50,15 @@
                 <th>PRICE</th>
 
                 <?php
-                $conn = mysqli_connect(hostname: "localhost", username: "root", password: "", database: "computerservices");
-                $res = mysqli_query(mysql: $conn, query: "SELECT * FROM available_pc");
+                require_once "connection.php";
+                $res = mysqli_query(mysql: $conn, query: "SELECT products.*, category.name as cat_name FROM products 
+                                     JOIN category ON products.category_id = category.id WHERE category.id = 1;");
 
                 while ($row = mysqli_fetch_array(result: $res)) {
                     echo "<tr>";
-                    echo "<td ><img src=AvailablePCs\\" . $row["image"] . "></td>";
+                    echo "<td ><img src=uploads\\" . $row["image"] . "></td>";
                     echo "<td>";
-                    $sentences = explode(separator: "\n", string: $row["specs"]);
+                    $sentences = explode(separator: "\n", string: $row["description"]);
 
                     foreach ($sentences as $sentence) {
                         $sentence = trim(string: $sentence);
@@ -62,6 +69,8 @@
                     echo "</tr>";
                 }
                 ?>
+
+
             </table>
         </section>
     </main>

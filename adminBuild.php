@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "computerservices");
+$conn = mysqli_connect(hostname: "localhost", username: "root", password: "", database: "computerservices");
 $res = mysqli_query($conn, "SELECT * FROM available_parts");
 
 while ($row = mysqli_fetch_array($res)) {
@@ -33,7 +33,12 @@ $json_data = json_encode($data);
                     <li><a href="admin.php">Home</a></li>
                     <li><a href="admin.php#buy-Build">Buy </a></li>
                     <li><a href="admin.php#contact">Repair</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <?php session_start();
+                    if ($_SESSION['is_logged_in']) {
+                        echo '<li><a href="logout.php">Logout</a></li>';
+                    } else {
+                        echo '<li><a href="login.php">Login</a></li>';
+                    } ?>
                 </ul>
             </div>
         </nav>

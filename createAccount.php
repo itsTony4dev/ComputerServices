@@ -1,26 +1,31 @@
 <?php
 
+require_once "connection.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_POST["password"] == $_POST["confirm-password"]) {
+        $name = $_POST["name"];
         $username = $_POST["username"];
         $password = $_POST["password"];
 
-        $conn = new mysqli(hostname: "localhost", username: "root", password: "", database: "computerservices");
-        $stmt = $conn->prepare(query: "INSERT INTO `user`( `username`, `password`, `role`) VALUES (?,?,0)");
 
-        $stmt->bind_param("ss", $username, $password);
+        $stmt = $conn->prepare(query: "INSERT INTO `users`(`name`, `username`, `password`, `role_id`) VALUES (?,?,?,2)");
+        $stmt->bind_param("sss", $name, $username, $password);
 
         if ($stmt->execute()) {
             echo "<script>alert('User registered successfully!')</script>";
             header(header: "Location: login.php");
         } else {
-            echo "<script> alert('Error: " . $stmt->error . "')</script>";
+            if ($conn->errno === 1062) {
+                echo "<script>alert('Error: This username is already taken. Please choose a different username.')</script>";
+            } else {
+                echo "<script>alert('Error: " . $stmt->error . "')</script>";
+            }
         }
         $stmt->close();
-    } else {
-        echo "<script> alert('Passwords does not match!') </script>";
     }
 }
+$conn->close();
 ?>
 
 
@@ -41,6 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Create Account</h1>
         <form method="POST">
             <div class="form-group">
+                <label>Name</label>
+                <input type="text" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Enter your username" required>
             </div>
@@ -59,15 +68,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <button type="submit">Sign Up</button>
         </form>
         <script>
-        function Toggle() {
-            let txtPass = document.getElementById("typepass");
+            function Toggle() {
+                let txtPass = document.getElementById("typepass");
 
-            if (txtPass.type === "password") {
-                txtPass.type = "text";
-            } else {
-                txtPass.type = "password";
+                if (txtPass.type === "password") {
+                    txtPass.type = "text";
+                } else {
+                    txtPass.type = "password";
+                }
             }
-        }
         </script>
     </div>
 </body>

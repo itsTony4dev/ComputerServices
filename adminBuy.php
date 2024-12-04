@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="buy.css" />
     <link rel="icon" href="pictures/loginlogo.png">
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
+
     <title>Computer Services</title>
 </head>
 
@@ -21,7 +23,12 @@
                     <li><a href="admin.php">Home</a></li>
                     <li><a href="admin.php#buy-Build">Buy </a></li>
                     <li><a href="admin.php#contact">Repair</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <?php session_start();
+                    if ($_SESSION['is_logged_in']) {
+                        echo '<li><a href="logout.php">Logout</a></li>';
+                    } else {
+                        echo '<li><a href="login.php">Login</a></li>';
+                    } ?>
                 </ul>
             </div>
         </nav>
@@ -49,7 +56,7 @@
 
                 while ($row = mysqli_fetch_array(result: $res)) {
                     echo "<tr>";
-                    echo "<td><img src=AvailablePCs\\" . $row["image"] . "></td>";
+                    echo "<td><img src=uploads\\" . $row["image"] . "></td>";
                     echo "<td>";
                     $sentences = explode(separator: ".", string: $row["specs"]);
 
@@ -58,13 +65,13 @@
                         echo "<li>" . $sentence . "</li>";
                     }
                     echo "</td>";
-                    echo "<td> <p>$" . $row["price"] . "</p><button class=btn>Add to cart</button></td>";
-                    echo "<td><button id='edit'></button></td>";
-                    echo "<td><button id='delete'></button></td>";
+                    echo "<td> <p>$" . $row["price"] . "</p></td>";
+                    echo "<td><button id='dlt'><i class='fa-regular fa-pen-to-square fa-2xl'></i></button></td>";
+                    echo "<td><button id='dlt'><i class='fa-regular fa-trash-can fa-2xl style='color: #c70000;''></i></button></td>";
                     echo "</tr>";
                 }
                 ?>
-            </table> 
+            </table>
         </section>
         <h2 style=" text-align: center;margin: 40px; color:red">Upload PC</h2>
         <form method="POST" enctype="multipart/form-data" class="upload-form">
@@ -78,4 +85,5 @@
         <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>
     </footer>
 </body>
+
 </html>

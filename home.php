@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" href="pictures/loginlogo.png">
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
     <title>Computer Services</title>
 </head>
 
@@ -21,12 +22,18 @@
                     <li><a href="#">Home</a></li>
                     <li><a href="#buy-Build">Buy</a></li>
                     <li><a href="#contact">Repair</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <?php session_start();
+                    if ($_SESSION['is_logged_in']) {
+                        echo '<li><a href="logout.php">Logout</a></li>';
+                    } else {
+                        echo '<li><a href="login.php">Login</a></li>';
+                    } ?>
+                    <li><a href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a></li>
+
                 </ul>
             </div>
         </nav>
     </header>
-
     <main>
         <section class="hero">
             <h1>Expert PC Repair & Buy Services</h1>

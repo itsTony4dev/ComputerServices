@@ -1,10 +1,13 @@
 <?php
+
+require_once "connection.php";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    $conn = new mysqli(hostname: "localhost", username: "root", password: "", database: "computerservices");
-    $stmt = $conn->prepare(query: "SELECT * FROM `user` WHERE `username` = ? AND `password` = ?");
+
+    $stmt = $conn->prepare(query: "SELECT * FROM `users` WHERE `username` = ? AND `password` = ?");
 
     $stmt->bind_param("ss", $username,  $password);
 
@@ -14,9 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($res->num_rows > 0) {
         $row = $res->fetch_assoc();
-        $username = $row["username"];
-        $password = $row["password"];
-        $role = $row["role"];
+        $role = $row["role_id"];
+
+        session_start();
+        $_SESSION["name"] = $row["name"];
+        $_SESSION["user_id"] = $row["id"];
+        $_SESSION["role"] = $role;
+        $_SESSION["is_logged_in"] = true;
 
         if ($role == 1) {
             header(header: "Location: admin.php");
@@ -24,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header(header: "Location: home.php");
         }
     }
+
     $conn->close();
 }
 ?>
