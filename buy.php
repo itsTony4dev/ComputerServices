@@ -19,17 +19,24 @@
             <div class="nav-links">
                 <ul>
                     <li><a href="home.php">Home</a></li>
-                    <li><a href="home.php#buy-Build">Buy </a></li>
+                    <li><a href="home.php#buy-Build">Buy</a></li>
                     <li><a href="home.php#contact">Repair</a></li>
                     <?php session_start();
                     if ($_SESSION['is_logged_in']) {
-                        echo '<li><a href="logout.php">Logout</a></li>';
+                        echo '<li class="dropdown">
+                    <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="cart.php">Cart</a></li>
+                        <li><a href="history.php">History</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </li>';
                     } else {
                         echo '<li><a href="login.php">Login</a></li>';
                     } ?>
-                    <li><a href="cart.php">Cart</a></li>
                 </ul>
             </div>
+
         </nav>
     </header>
 
@@ -65,10 +72,29 @@
                         echo "<li>" . $sentence . "</li>";
                     }
                     echo "</td>";
-                    echo "<td> <p>$" . $row["price"] . "</p><button class=btn>Add to cart</button></td>";
+                    echo "<td> <p>$" . $row["price"] . "</p><button class=btn onclick='logged()'>Add to cart</button></td>";
                     echo "</tr>";
                 }
                 ?>
+
+                <script>
+                    let isLoggedIn = <?php echo json_encode(value: $_SESSION['is_logged_in']); ?>;
+
+                    const logged = () => {
+                        if (!isLoggedIn) {
+                            alert("You must be logged in to add to cart");
+                        }
+                    };
+
+                    const show = () => {
+                        if (document.getElementById('dropdown-menu').style.display != "block") {
+
+                            document.getElementById('dropdown-menu').style.display = "block";
+                        } else {
+                           return document.getElementById('dropdown-menu').style.display = "none";
+                        }
+                    }
+                </script>
 
 
             </table>

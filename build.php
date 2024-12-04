@@ -34,15 +34,21 @@ $json_data = json_encode(value: $data);
             <div class="nav-links">
                 <ul>
                     <li><a href="home.php">Home</a></li>
-                    <li><a href="home.php#buy-Build">Buy </a></li>
+                    <li><a href="home.php#buy-Build">Buy</a></li>
                     <li><a href="home.php#contact">Repair</a></li>
                     <?php session_start();
                     if ($_SESSION['is_logged_in']) {
-                        echo '<li><a href="logout.php">Logout</a></li>';
+                        echo '<li class="dropdown">
+                    <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="cart.php">Cart</a></li>
+                        <li><a href="history.php">History</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </li>';
                     } else {
                         echo '<li><a href="login.php">Login</a></li>';
                     } ?>
-                    <li><a href="cart.php">Cart</a></li>
                 </ul>
             </div>
         </nav>
@@ -87,10 +93,19 @@ $json_data = json_encode(value: $data);
                 <h3>${component.name}</h3>
                 <p>${component.cat_name}</p>
                 <p class="price">$${component.price}</p>
-                <button class="btn"> Add to cart </button>
+                <button class="btn" onclick="logged()"> Add to cart </button>
             `;
                 return card;
             }
+
+            let isLoggedIn = <?php echo json_encode(value: $_SESSION['is_logged_in']); ?>;
+
+            const logged = () => {
+                if (!isLoggedIn) {
+                    alert("You must be logged in to add to cart");
+                }
+            };
+
 
             // Function to render component cards
             function renderComponents(sortOption) {
@@ -131,8 +146,15 @@ $json_data = json_encode(value: $data);
         <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>
     </footer>
 </body>
-<style>
+<script>
+    const show = () => {
+        if (document.getElementById('dropdown-menu').style.display != "block") {
 
-</style>
+            document.getElementById('dropdown-menu').style.display = "block";
+        } else {
+            return document.getElementById('dropdown-menu').style.display = "none";
+        }
+    }
+</script>
 
 </html>

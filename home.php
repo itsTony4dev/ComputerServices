@@ -19,19 +19,25 @@
             </div>
             <div class="nav-links">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#buy-Build">Buy</a></li>
-                    <li><a href="#contact">Repair</a></li>
+                    <li><a href="home.php">Home</a></li>
+                    <li><a href="home.php#buy-Build">Buy</a></li>
+                    <li><a href="home.php#contact">Repair</a></li>
                     <?php session_start();
                     if ($_SESSION['is_logged_in']) {
-                        echo '<li><a href="logout.php">Logout</a></li>';
+                        echo '<li class="dropdown">
+                    <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="cart.php">Cart</a></li>
+                        <li><a href="history.php">History</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </li>';
                     } else {
                         echo '<li><a href="login.php">Login</a></li>';
                     } ?>
-                    <li><a href="cart.php"><i class="fa-solid fa-cart-shopping fa-lg"></i></a></li>
-
                 </ul>
             </div>
+
         </nav>
     </header>
     <main>
@@ -103,5 +109,16 @@
         <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>
     </footer>
 </body>
+
+<script>
+    const show = () => {
+        if (document.getElementById('dropdown-menu').style.display != "block") {
+
+            document.getElementById('dropdown-menu').style.display = "block";
+        } else {
+            return document.getElementById('dropdown-menu').style.display = "none";
+        }
+    }
+</script>
 
 </html>

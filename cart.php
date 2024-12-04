@@ -33,7 +33,7 @@
             <div class="cart-card">
                 <div class="product-info">
                     <h2 class="product-name">Gaming PC</h2>
-                    <img src="AvailablePCs/i312th1650.jpg" alt="">
+                    <img src="uploads/i312th1650.jpg" alt="">
                     <p class="product-description">High-performance gaming setup.</p>
                     <p class="product-price">$1200</p>
                     <div class="quantity-controls">
@@ -48,7 +48,7 @@
             <div class="cart-card">
                 <div class="product-info">
                     <h2 class="product-name">Gaming PC</h2>
-                    <img src="AvailableParts/ASRock_4710483932311.jpg" alt="">
+                    <img src="uploads/ASRock_4710483932311.jpg" alt="">
                     <p class="product-description">High-performance gaming setup.</p>
                     <p class="product-price">$1200</p>
                     <div class="quantity-controls">
@@ -63,7 +63,7 @@
             <div class="cart-card">
                 <div class="product-info">
                     <h2 class="product-name">Gaming PC</h2>
-                    <img src="AvailableParts/Cooler Master_884102056529.jpg" alt="">
+                    <img src="uploads/Cooler Master_884102056529.jpg" alt="">
                     <p class="product-description">High-performance gaming setup.</p>
                     <p class="product-price">$1200</p>
                     <div class="quantity-controls">
@@ -79,7 +79,7 @@
             <div class="cart-card">
                 <div class="product-info">
                     <h2 class="product-name">Gaming PC</h2>
-                    <img src="AvailableParts/Seagate_141412.jpg" alt="">
+                    <img src="uploads/Seagate_141412.jpg" alt="">
                     <p class="product-description">High-performance gaming setup.</p>
                     <p class="product-price">$1200</p>
                     <div class="quantity-controls">
@@ -94,7 +94,7 @@
             <div class="cart-card">
                 <div class="product-info">
                     <h2 class="product-name">Gaming PC</h2>
-                    <img src="AvailableParts/rgbFan.jpg" alt="">
+                    <img src="uploads/rgbFan.jpg" alt="">
                     <p class="product-description">High-performance gaming setup.</p>
                     <p class="product-price">$1200</p>
                     <div class="quantity-controls">

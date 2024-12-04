@@ -26,6 +26,7 @@
                     if ($_SESSION['is_logged_in']) {
                         echo '<li><a href="logout.php">Logout</a></li>';
                     } else {
+                        // header(header: "Location: login.php");
                         echo '<li><a href="login.php">Login</a></li>';
                     } ?>
                 </ul>
@@ -81,24 +82,7 @@
             </div>
         </section>
 
-        <section class="contact" id="contact">
-            <h2>Get in Touch</h2>
-            <form>
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" autocomplete="off" required />
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" autocomplete="off" required />
-                </div>
-                <div class="form-group">
-                    <label for="message">Message:</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="btn">Submit</button>
-            </form>
-        </section>
+
     </main>
     <footer>
         <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>

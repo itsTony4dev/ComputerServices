@@ -65,7 +65,7 @@
                         echo "<li>" . $sentence . "</li>";
                     }
                     echo "</td>";
-                    echo "<td> <p>$" . $row["price"] . "</p></td>";
+                    echo "<td> <p style='color:#800'>$" . $row["price"] . "</p></td>";
                     echo "<td><button id='dlt'><i class='fa-regular fa-pen-to-square fa-2xl'></i></button></td>";
                     echo "<td><button id='dlt'><i class='fa-regular fa-trash-can fa-2xl style='color: #c70000;''></i></button></td>";
                     echo "</tr>";

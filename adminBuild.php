@@ -81,19 +81,15 @@ $json_data = json_encode($data);
                 const card = document.createElement('div');
                 card.classList.add('component-card');
                 card.innerHTML = `
-                 <div >
-                <img src="AvailableParts/${component.image}" alt="${component.name}">
-                   </div >
-                    <div >
+                <img src="uploads/${component.image}" alt="${component.name}">
                 <h3>${component.name}</h3>
-                <p>${component.category}</p>
+                <p>${component.cat_name}</p>
                 <p class="price">$${component.price}</p>
                 </div >
                     <div class="action-buttons">
                         <button class="edit-btn">Edit</button>
                         <button class="delete-btn">Delete</button>
                         </div>
-                        <button class="btn">Add to cart</button>
             `;
                 return card;
             }
@@ -159,8 +155,12 @@ $json_data = json_encode($data);
 </body>
 <style>
     .component-card {
-        height: 105%;
+        height: 102%;
 
+    }
+
+    .component-list {
+        box-shadow: none;
     }
 </style>
 
