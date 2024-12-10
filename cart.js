@@ -21,3 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+const show = () => {
+  if (document.getElementById('dropdown-menu').style.display != "block") {
+
+      document.getElementById('dropdown-menu').style.display = "block";
+  } else {
+     return document.getElementById('dropdown-menu').style.display = "none";
+  }
+}

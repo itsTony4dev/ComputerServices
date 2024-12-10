@@ -1,11 +1,14 @@
 <?php
-$conn = mysqli_connect(hostname: "localhost", username: "root", password: "", database: "computerservices");
-$res = mysqli_query($conn, "SELECT * FROM available_parts");
 
-while ($row = mysqli_fetch_array($res)) {
+require_once "connection.php";
+
+$res = mysqli_query(mysql: $conn, query: "SELECT products.*, category.name as cat_name FROM products 
+                    JOIN category ON products.category_id = category.id WHERE category.id != 1;");
+
+while ($row = mysqli_fetch_array(result: $res)) {
     $data[] = $row;
 }
-$json_data = json_encode($data);
+$json_data = json_encode(value: $data);
 
 ?>
 
@@ -16,7 +19,7 @@ $json_data = json_encode($data);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="build.css" />
+    <link rel="stylesheet" href="css/build.css" />
     <link rel="icon" href="pictures/loginlogo.png">
     <title>Computer Services</title>
 </head>
@@ -56,7 +59,6 @@ $json_data = json_encode($data);
                 <select id="sort">
                     <option value="default">Default</option>
                     <option value="name-asc">Name (A-Z)</option>
-                    <!-- <option value="name-desc">Name (Z-A)</option> -->
                     <option value="price-asc">Price (Low to High)</option>
                     <option value="price-desc">Price (High to Low)</option>
                 </select>
@@ -76,7 +78,7 @@ $json_data = json_encode($data);
             console.log(components);
 
 
-            // Helper function to create component card HTML
+
             function createComponentCard(component) {
                 const card = document.createElement('div');
                 card.classList.add('component-card');
@@ -85,10 +87,11 @@ $json_data = json_encode($data);
                 <h3>${component.name}</h3>
                 <p>${component.cat_name}</p>
                 <p class="price">$${component.price}</p>
+                <p class="qtty">${component.stock_quantity} pcs</p>
                 </div >
-                    <div class="action-buttons">
-                        <button class="edit-btn">Edit</button>
-                        <button class="delete-btn">Delete</button>
+                <div class="action-buttons">
+                        <button class="edit-btn"><a href="edit.php?id=${component.id}">Edit</a></button>
+                        <button class="delete-btn"><a href="delete.php?id=${component.id}">Delete</a></button>
                         </div>
             `;
                 return card;
@@ -137,13 +140,25 @@ $json_data = json_encode($data);
             <input type="file" id="image">
 
             <label for="name">Name</label>
-            <textarea id="name" rows="4" placeholder="Enter the name"></textarea>
+            <input type="text" id="name" rows="4" placeholder="Enter the name"></input>
 
             <label for="category">Category</label>
-            <input type="text" id="category" placeholder="Enter the category">
+            <select name="category" id="category">
+                <option value="">Select Category</option>
+                <?php
+                $sql = "SELECT * FROM category";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+                }
+                ?>
+            </select>
+
+            <label for="stock_quantity">Stock Quantity</label>
+            <input type="number" id="stock_quantity" placeholder="Enter stock quantity">
 
             <label for="price">Price</label>
-            <input type="text" id="price" placeholder="Enter price">
+            <input type="number" id="price" placeholder="Enter price">
 
             <button type="submit" class="btn">UPLOAD</button>
         </form>
@@ -155,8 +170,7 @@ $json_data = json_encode($data);
 </body>
 <style>
     .component-card {
-        height: 102%;
-
+        height: 100%;
     }
 
     .component-list {

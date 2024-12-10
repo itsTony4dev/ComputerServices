@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="pictures/loginlogo.png">
     <title>Computer Services</title>
 </head>
@@ -26,7 +26,6 @@
                     if ($_SESSION['is_logged_in']) {
                         echo '<li><a href="logout.php">Logout</a></li>';
                     } else {
-                        // header(header: "Location: login.php");
                         echo '<li><a href="login.php">Login</a></li>';
                     } ?>
                 </ul>
@@ -38,7 +37,6 @@
         <section class="hero">
             <h1>Expert PC Repair & Buy Services</h1>
             <p>Get your PC fixed or buy your favourite specs.</p>
-            <!-- <a href="#contact" class="cta-btn">Get a Quote</a> -->
         </section>
 
         <section class="services" id="repair">

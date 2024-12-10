@@ -2,8 +2,10 @@
 
 require_once "connection.php";
 
-$res = mysqli_query(mysql: $conn, query: "SELECT products.*, category.name as cat_name FROM products 
-                    JOIN category ON products.category_id = category.id WHERE category.id != 1;");
+$res = mysqli_query(mysql: $conn, query:"SELECT products.*, category.name as cat_name 
+                                         FROM products 
+                                         JOIN category ON products.category_id = category.id 
+                                         WHERE category.id != 1;");
 
 while ($row = mysqli_fetch_array(result: $res)) {
     $data[] = $row;
@@ -19,7 +21,7 @@ $json_data = json_encode(value: $data);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="build.css" />
+    <link rel="stylesheet" href="css/build.css" />
     <link rel="icon" href="pictures/loginlogo.png">
     <title>Computer Services</title>
 </head>

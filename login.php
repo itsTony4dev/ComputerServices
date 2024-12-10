@@ -1,40 +1,46 @@
 <?php
-
 require_once "connection.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    session_start();
+
     $username = $_POST["username"];
-    $password = $_POST["password"];
+    $inputPassword = $_POST["password"];
 
-
-    $stmt = $conn->prepare(query: "SELECT * FROM `users` WHERE `username` = ? AND `password` = ?");
-
-    $stmt->bind_param("ss", $username,  $password);
-
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
+    $result = $stmt->get_result();
 
-    $res = $stmt->get_result();
-
-    if ($res->num_rows > 0) {
-        $row = $res->fetch_assoc();
-        $role = $row["role_id"];
-
-        session_start();
-        $_SESSION["name"] = $row["name"];
-        $_SESSION["user_id"] = $row["id"];
-        $_SESSION["role"] = $role;
-        $_SESSION["is_logged_in"] = true;
-
-        if ($role == 1) {
-            header(header: "Location: admin.php");
-        } else {
-            header(header: "Location: home.php");
-        }
+    if ($result->num_rows === 0) {
+        echo "<script>alert('Invalid username or password'); window.location.href = 'login.php';</script>";
+        exit();
     }
 
+    $row = $result->fetch_assoc();
+    $hashedPassword = $row['password'];
+
+    if (!password_verify($inputPassword, $hashedPassword)) {
+        echo "<script>alert('Invalid username or password'); window.location.href = 'login.php';</script>";
+        exit();
+    }
+
+    $_SESSION["name"] = $row["name"];
+    $_SESSION["user_id"] = $row["id"];
+    $_SESSION["role"] = $row["role_id"];
+    $_SESSION["is_logged_in"] = true;
+
+    if ($row["role_id"] == 1) {
+        header("Location: admin.php");
+    } else {
+        header("Location: home.php");
+    }
+
+    $stmt->close();
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="utf-8">
 
@@ -43,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="icon" href="pictures/loginlogo.png">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="css/cart.css">
 
 <body>
     <script src="cart.js">
@@ -19,9 +19,21 @@
             <div class="nav-links">
                 <ul>
                     <li><a href="home.php">Home</a></li>
-                    <li><a href="home.php#buy-Build">Buy </a></li>
+                    <li><a href="home.php#buy-Build">Buy</a></li>
                     <li><a href="home.php#contact">Repair</a></li>
-                    <li><a href="login.php">Login</a></li>
+                    <?php session_start();
+                    if ($_SESSION['is_logged_in']) {
+                        echo '<li class="dropdown">
+                    <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
+                    <ul class="dropdown-menu" id="dropdown-menu">
+                        <li><a href="cart.php">Cart</a></li>
+                        <li><a href="history.php">History</a></li>
+                        <li><a href="logout.php">Logout</a></li>
+                    </ul>
+                </li>';
+                    } else {
+                        echo '<li><a href="login.php">Login</a></li>';
+                    } ?>
                 </ul>
             </div>
         </nav>
