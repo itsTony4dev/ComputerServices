@@ -44,46 +44,47 @@
         <section class="pc-listings">
             <h2>Available PCs</h2>
 
-            <table border="1" width="50%">
+            <table width="50%">
                 <th>IMAGE</th>
                 <th>SPECS</th>
                 <th>PRICE</th>
                 <th>EDIT</th>
                 <th>DELETE</th>
                 <?php
-                $conn = mysqli_connect(hostname: "localhost", username: "root", password: "", database: "computerservices");
-                $res = mysqli_query(mysql: $conn, query: "SELECT * FROM available_pc");
+                require_once "connection.php";
+                $res = mysqli_query(mysql: $conn, query: "SELECT products.*, category.name as cat_name FROM products 
+                                     JOIN category ON products.category_id = category.id WHERE category.id = 1;");
 
                 while ($row = mysqli_fetch_array(result: $res)) {
-                    echo "<tr>";
-                    echo "<td><img src=uploads\\" . $row["image"] . "></td>";
+                    echo "<tr style='border: 2px solid white;'>";
+                    echo "<td ><img src=uploads\\" . $row["image"] . "></td>";
                     echo "<td>";
-                    $sentences = explode(separator: ".", string: $row["specs"]);
+                    $sentences = explode(separator: "\n", string: $row["description"]);
 
                     foreach ($sentences as $sentence) {
-                        $sentence = trim(string: $sentence) . ".";
+                        $sentence = trim(string: $sentence);
                         echo "<li>" . $sentence . "</li>";
                     }
                     echo "</td>";
-                    echo "<td> <p style='color:#800'>$" . $row["price"] . "</p></td>";
-                    echo "<td><button id='dlt'><i class='fa-regular fa-pen-to-square fa-2xl'></i></button></td>";
-                    echo "<td><button id='dlt'><i class='fa-regular fa-trash-can fa-2xl style='color: #c70000;''></i></button></td>";
+                    echo "<td> <p style='color: #800'>$" . $row["price"] . "</p></td>";
+                    echo "<td><button id='dlt'><a href='pcEdit.php?id=" . $row["id"] . "'><i class='fa-regular fa-pen-to-square fa-2xl'></i></a></button></td>";
+                    echo "<td><button id='dlt'><a href='delete.php?id=" . $row["id"] . "&cat_id=1'><i class='fa-regular fa-trash-can fa-2xl'></i></a></button></td>";
                     echo "</tr>";
                 }
                 ?>
             </table>
         </section>
         <h2 style=" text-align: center;margin: 40px; color:red">Upload PC</h2>
-        <form method="POST" enctype="multipart/form-data" class="upload-form">
+        <form method="POST" enctype="multipart/form-data" class="upload-form" action="upload.php">
+            <input type="hidden" name="category" value="1">
             <label>Choose an image</label><input name="image" type="file">
-            <label for="">Specs</label><textarea name="Specs" rows="6"></textarea>
-            <label for="">Price</label><input name="Price" type="text" style="width:70px; padding:5px 10px">
-            <button type="submit" name="submit" class="btn">UPLOAD</button>
+            <label for="">Specs</label><textarea name="description" rows="6"></textarea>
+            <label for="">Price</label><input name="price" type="text" style="width:70px; padding:5px 10px">
+            <button type="submit" name="upload" class="btn">UPLOAD</button>
         </form>
     </main>
     <footer>
         <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>
     </footer>
 </body>
-
 </html>

@@ -40,7 +40,7 @@
 
         </nav>
     </header>
-    <main>
+    <main style="background-image: url('pictures/home.webp');">
         <section class="hero">
             <h1>Expert PC Repair & Buy Services</h1>
             <p>Get your PC fixed or buy your favourite specs.</p>
@@ -55,16 +55,16 @@
                     <p>Our technicians can fix any hardware issues with your PC.</p>
                 </div>
                 <div class="service-card">
+                    <img src="pictures/buildOrBuy.webp" alt="Data Recovery" style="width: 300px; height: 168px" />
+                    <h3>PC & PC Parts</h3>
+                    <p>Buy a pre-built pc or get your brand new parts with the best prices.</p>
+                </div>
+                <div class="service-card">
                     <img src="pictures/gpu.webp" alt="Software Repair" style="width: 300px; height: 168px" />
                     <h3>Software Repair</h3>
                     <p>
                         We can resolve software-related problems and optimize your system.
                     </p>
-                </div>
-                <div class="service-card">
-                    <img src="pictures/buildOrBuy.webp" alt="Data Recovery" style="width: 300px; height: 168px" />
-                    <h3>PC & PC Parts</h3>
-                    <p>Buy a pre-built pc or get your brand new parts with the best prices.</p>
                 </div>
             </div>
         </section>

@@ -33,7 +33,7 @@
         </nav>
     </header>
 
-    <main>
+    <main style="background-image: url('pictures/home.webp');">
         <section class="hero">
             <h1>Expert PC Repair & Buy Services</h1>
             <p>Get your PC fixed or buy your favourite specs.</p>

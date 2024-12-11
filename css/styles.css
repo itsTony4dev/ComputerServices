@@ -7,6 +7,24 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8edf2 100%);
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+  z-index: -1;
+  background-image: 
+    radial-gradient(#ff000015 1px, transparent 1px),
+    radial-gradient(#ff000015 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
 }
 
 header {
@@ -114,7 +132,10 @@ nav {
 
 .services,
 .buy-Build {
-  padding: 40px 20px;
+  padding: 40px 20px 140px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  margin: 5px 0;
 }
 
 .services h2,
@@ -124,12 +145,20 @@ nav {
   text-align: center;
   margin-bottom: 40px;
 }
+.services h2{
+  margin-bottom: 150px;
+}
 
 .service-cards,
 .buy-Build-cards {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+
+.buy-Build-cards{
+  scale: 1.2;
+  padding: 0 250px;
 }
 
 .service-card,
@@ -150,6 +179,14 @@ nav {
 .buy-Build-card h3 {
   font-size: 24px;
   margin-bottom: 10px;
+}
+
+.service-card:nth-child(2){
+  scale: 1.5;
+}
+
+.service-card:first-child, .service-card:last-child {
+  scale: 1.2;
 }
 
 .btn a {
@@ -176,7 +213,8 @@ nav {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .contact {
-  background-color: #f4f4f4;
+  background: rgba(244, 244, 244, 0.8);
+  backdrop-filter: blur(10px);
   padding: 40px 20px;
 }
 
@@ -362,7 +400,9 @@ footer {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
-
+.buy-Build h2{
+  margin-bottom: 100px;
+}
 
 .nav-links .dropdown {
   position: relative;

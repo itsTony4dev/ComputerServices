@@ -25,10 +25,11 @@ if (isset($_GET['id'])) {
     <title>Edit product</title>
 </head>
 
-<body>
-    <div class="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;">
+<body style="background-image: url('pictures/home.webp'); ">
+    <div class="overlay" ></div>
+    <div class="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; z-index: 100;">
         <h2 style=" text-align: center;margin: 40px; color:red; font-size:30px; font-weight: 900">Edit Part</h2>
-        <form action="upload.php" class="upload-form" method="POST" enctype="multipart/form-data">
+        <form action="update.php" class="upload-form" method="POST" enctype="multipart/form-data">
 
             <input type="hidden" name="id" value="<?= $product['id'] ?>">
             <label for="image">Edit image</label>
@@ -36,7 +37,7 @@ if (isset($_GET['id'])) {
             <input type="hidden" name="old_image" value="<?= $product['image'] ?>">
 
             <label for="name">Name</label>
-            <input type="text" id="name" rows="4" value="<?= $product['name'] ?>" name="name"></input>
+            <input type="text" id="name" rows="4" value="<?= $product['name'] ?>" name="name" required></input>
 
             <label for="category">Category</label>
             <select name="category" id="category">
@@ -51,10 +52,10 @@ if (isset($_GET['id'])) {
             </select>
 
             <label for="stock_quantity">Quantity</label>
-            <input type="number" id="stock_quantity" value="<?= $product['stock_quantity'] ?>" name="stock_quantity">
+            <input type="number" id="stock_quantity" value="<?= $product['stock_quantity'] ?>" name="stock_quantity" required>
 
             <label for="price">Price</label>
-            <input type="number" id="price" value="<?= $product['price'] ?>" name="price">
+            <input type="number" id="price" value="<?= $product['price'] ?>" name="price" required>
 
             <button type="submit" name="edit" class="btn">EDIT</button>
             <button class="btn" style=" background-color:#333">
@@ -63,12 +64,23 @@ if (isset($_GET['id'])) {
 
         </form>
     </div>
+
 </body>
 <style>
     .upload-form button a:last-child:hover {
         background-color: #333;
     }
 
+    .overlay {
+        background-color: white;
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.85;
+    }
 </style>
 
 </html>

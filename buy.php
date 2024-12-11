@@ -51,7 +51,7 @@
         <section class="pc-listings">
             <h2>Available PCs</h2>
 
-            <table border="1" width="50%">
+            <table  width="50%">
                 <th>IMAGE</th>
                 <th>SPECS</th>
                 <th>PRICE</th>
@@ -62,7 +62,7 @@
                                      JOIN category ON products.category_id = category.id WHERE category.id = 1;");
 
                 while ($row = mysqli_fetch_array(result: $res)) {
-                    echo "<tr>";
+                    echo "<tr style='border: 2px solid white;'>";
                     echo "<td ><img src=uploads\\" . $row["image"] . "></td>";
                     echo "<td>";
                     $sentences = explode(separator: "\n", string: $row["description"]);

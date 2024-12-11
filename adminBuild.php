@@ -90,7 +90,7 @@ $json_data = json_encode(value: $data);
                 <p class="qtty">${component.stock_quantity} pcs</p>
                 </div >
                 <div class="action-buttons">
-                        <button class="edit-btn"><a href="edit.php?id=${component.id}">Edit</a></button>
+                        <button class="edit-btn"><a href="partsEdit.php?id=${component.id}">Edit</a></button>
                         <button class="delete-btn"><a href="delete.php?id=${component.id}">Delete</a></button>
                         </div>
             `;
@@ -135,12 +135,12 @@ $json_data = json_encode(value: $data);
             });
         </script>
         <h2 style=" text-align: center;margin: 40px; color:red">Upload Parts</h2>
-        <form action="POST" class="upload-form">
+        <form action="upload.php" method="POST" class="upload-form" enctype="multipart/form-data">
             <label for="image">Choose an image</label>
-            <input type="file" id="image">
+            <input type="file" id="image" name="image">
 
             <label for="name">Name</label>
-            <input type="text" id="name" rows="4" placeholder="Enter the name"></input>
+            <input type="text" id="name" rows="4" placeholder="Enter the name" name="name"></input>
 
             <label for="category">Category</label>
             <select name="category" id="category">
@@ -155,12 +155,12 @@ $json_data = json_encode(value: $data);
             </select>
 
             <label for="stock_quantity">Stock Quantity</label>
-            <input type="number" id="stock_quantity" placeholder="Enter stock quantity">
+            <input type="number" id="stock_quantity" placeholder="Enter stock quantity" name="stock_quantity">
 
             <label for="price">Price</label>
-            <input type="number" id="price" placeholder="Enter price">
+            <input type="number" id="price" placeholder="Enter price" name="price">
 
-            <button type="submit" class="btn">UPLOAD</button>
+            <button type="submit" class="btn" name="upload">UPLOAD</button>
         </form>
 
     </main>
