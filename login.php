@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Login Form</title>
     <link rel="icon" href="pictures/loginlogo.png">
     <link rel="stylesheet" href="css/login.css">
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -70,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <strong>Show Password</strong>
             <button type="submit">Login</button>
             <button><a href="createAccount.php" style="text-decoration: none; color:black;">Create Account</a></button>
+            <a href="home.php" style="text-decoration: none; color:#c70000;"><i class="fa-solid fa-user fa-sm"></i>&nbsp; Enter as Guest</a>
         </form>
         <script>
             function Toggle() {

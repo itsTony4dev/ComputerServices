@@ -1,3 +1,8 @@
+<?php
+session_start();
+$total = 0;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,90 +46,34 @@
     <div class="cart-container">
         <h1 class="cart-title">Your Cart</h1>
         <div class="cart-items">
-            <!-- Example Product Card -->
-            <div class="cart-card">
-                <div class="product-info">
-                    <h2 class="product-name">Gaming PC</h2>
-                    <img src="uploads/i312th1650.jpg" alt="">
-                    <p class="product-description">High-performance gaming setup.</p>
-                    <p class="product-price">$1200</p>
-                    <div class="quantity-controls">
-                        <button id="decrement" class="quantity-btn minus" onclick="decrement()">-</button>
-                        <span id="quantity" class="quantity">1</span>
-                        <button id="increment" class="quantity-btn plus" onclick="increment()">+</button>
+            <?php
+            require_once 'connection.php';
+            $user_id = $_SESSION['user_id'];
+            $stmt = "SELECT `cart`.*, `products`.`name`, `products`.`category_id`, `products`.`price`, `products`.`image` FROM `cart` 
+                     JOIN `products` ON `cart`.`product_id` = `products`.`id` WHERE `user_id` = $user_id";
+            $result = $conn->query($stmt);
+            while ($row = $result->fetch_assoc()) { ?>
+                <div class="cart-card" style="position: relative; min-height: 380px;">
+                    <div class="product-info">
+                        <h2 class="product-name"><?= trim($row['name']) == '' ? 'Gaming Pc' : $row['name']; ?></h2>
+                        <img src="uploads/<?= $row['image']; ?>" alt="">
+                        <p class="product-price">$<?= $row['price']; ?></p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus">-</button>
+                            <span class="quantity"><?= $row['quantity']; ?></span>
+                            <button class="quantity-btn plus">+</button>
+                        </div>
                     </div>
+                    <button class="remove-btn"><a href="removeFromCart.php?id=<?= $row['id']; ?>" style="text-decoration: none; color:black;">Remove</a></button>
                 </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-
-            <div class="cart-card">
-                <div class="product-info">
-                    <h2 class="product-name">Gaming PC</h2>
-                    <img src="uploads/ASRock_4710483932311.jpg" alt="">
-                    <p class="product-description">High-performance gaming setup.</p>
-                    <p class="product-price">$1200</p>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn plus">+</button>
-                    </div>
-                </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-
-            <div class="cart-card">
-                <div class="product-info">
-                    <h2 class="product-name">Gaming PC</h2>
-                    <img src="uploads/Cooler Master_884102056529.jpg" alt="">
-                    <p class="product-description">High-performance gaming setup.</p>
-                    <p class="product-price">$1200</p>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn plus">+</button>
-                    </div>
-                </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-
-
-            <div class="cart-card">
-                <div class="product-info">
-                    <h2 class="product-name">Gaming PC</h2>
-                    <img src="uploads/Seagate_141412.jpg" alt="">
-                    <p class="product-description">High-performance gaming setup.</p>
-                    <p class="product-price">$1200</p>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn plus">+</button>
-                    </div>
-                </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-
-            <div class="cart-card">
-                <div class="product-info">
-                    <h2 class="product-name">Gaming PC</h2>
-                    <img src="uploads/rgbFan.jpg" alt="">
-                    <p class="product-description">High-performance gaming setup.</p>
-                    <p class="product-price">$1200</p>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn minus">-</button>
-                        <span class="quantity">1</span>
-                        <button class="quantity-btn plus">+</button>
-                    </div>
-                </div>
-                <button class="remove-btn">Remove</button>
-            </div>
-
-
+                <?php $total += $row['price'] * $row['quantity']; ?>
+            <?php  } ?>
 
 
         </div>
     </div>
     <div class="cart-summary">
-        <h2>Total: $2400</h2>
+        <h2>Total: $<?= $total; ?></h2>
         <button class="checkout-btn">Proceed to Checkout</button>
     </div>
     </div>
@@ -134,3 +83,32 @@
 </body>
 
 </html>
+<style>
+    .remove-btn {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .quantity-controls {
+        position: absolute;
+        bottom: 55px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .product-price {
+        position: absolute;
+        bottom: 22%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .cart-card img {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+    }
+</style>

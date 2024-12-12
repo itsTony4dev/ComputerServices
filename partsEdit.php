@@ -28,7 +28,7 @@ if (isset($_GET['id'])) {
 <body style="background-image: url('pictures/home.webp'); ">
     <div class="overlay" ></div>
     <div class="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; z-index: 100;">
-        <h2 style=" text-align: center;margin: 40px; color:red; font-size:30px; font-weight: 900">Edit Part</h2>
+        <h2 style=" text-align: center;margin: 40px; color:red; font-size:30px; font-weight: 900; backdrop-filter: blur(8px);">Edit Part</h2>
         <form action="update.php" class="upload-form" method="POST" enctype="multipart/form-data">
 
             <input type="hidden" name="id" value="<?= $product['id'] ?>">

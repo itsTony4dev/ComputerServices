@@ -73,11 +73,8 @@ $json_data = json_encode(value: $data);
             const componentList = document.querySelector('.component-list');
             const sortSelect = document.getElementById('sort');
 
-
             var components = <?php echo $json_data; ?>;
             console.log(components);
-
-
 
             function createComponentCard(component) {
                 const card = document.createElement('div');

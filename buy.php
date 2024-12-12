@@ -28,7 +28,7 @@
                     <ul class="dropdown-menu" id="dropdown-menu">
                         <li><a href="cart.php">Cart</a></li>
                         <li><a href="history.php">History</a></li>
-                        <li><a href="logout.php">Logout</a></li>
+                        <li><a href="logout.php?page=buy">Logout</a></li>
                     </ul>
                 </li>';
                     } else {
@@ -72,7 +72,12 @@
                         echo "<li>" . $sentence . "</li>";
                     }
                     echo "</td>";
-                    echo "<td> <p>$" . $row["price"] . "</p><button class=btn onclick='logged()'>Add to cart</button></td>";
+                    echo "<td> <p>$" . $row["price"] . "</p>
+                    <form method='POST' action='addToCart.php?page=buy'>
+                    <input type='hidden' name='component_id' value='" . $row["id"] . "'>
+                    <button class=btn onclick='logged()' type='submit' name='addToCart'>Add to cart</button>
+                    </form>
+                    </td>";
                     echo "</tr>";
                 }
                 ?>

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once "connection.php";
 
 $res = mysqli_query(mysql: $conn, query:"SELECT products.*, category.name as cat_name 
@@ -38,14 +38,14 @@ $json_data = json_encode(value: $data);
                     <li><a href="home.php">Home</a></li>
                     <li><a href="home.php#buy-Build">Buy</a></li>
                     <li><a href="home.php#contact">Repair</a></li>
-                    <?php session_start();
+                    <?php 
                     if ($_SESSION['is_logged_in']) {
                         echo '<li class="dropdown">
                     <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
                     <ul class="dropdown-menu" id="dropdown-menu">
                         <li><a href="cart.php">Cart</a></li>
                         <li><a href="history.php">History</a></li>
-                        <li><a href="logout.php">Logout</a></li>
+                        <li><a href="logout.php?page=build">Logout</a></li>
                     </ul>
                 </li>';
                     } else {
@@ -95,7 +95,10 @@ $json_data = json_encode(value: $data);
                 <h3>${component.name}</h3>
                 <p>${component.cat_name}</p>
                 <p class="price">$${component.price}</p>
-                <button class="btn" onclick="logged()"> Add to cart </button>
+                <form method="POST" action="addToCart.php?page=build">
+                    <input type="hidden" name="component_id" value="${component.id}">
+                    <button class="btn" type="submit" name="addToCart">Add to cart</button>
+                </form>
             `;
                 return card;
             }

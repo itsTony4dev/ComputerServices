@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+    header("Location: login.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,15 +24,14 @@
                 <a href="admin.php"><img src="pictures/Logo.png" alt="" /></a>
                 <a href="admin.php">CT ZONE</a>
             </div>
-            <h4>Admin</h4>
             <div class="nav-links">
                 <ul>
                     <li><a href="#">Home</a></li>
                     <li><a href="#buy-Build">Buy</a></li>
                     <li><a href="#contact">Repair</a></li>
-                    <?php session_start();
+                    <?php 
                     if ($_SESSION['is_logged_in']) {
-                        echo '<li><a href="logout.php">Logout</a></li>';
+                        echo '<li><a href="logout.php?page=admin">Logout</a></li>';
                     } else {
                         echo '<li><a href="login.php">Login</a></li>';
                     } ?>
