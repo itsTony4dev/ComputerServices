@@ -60,7 +60,7 @@ $total = 0;
                         <p class="product-price">$<?= $row['price']; ?></p>
                         <div class="quantity-controls">
                             <button class="quantity-btn minus">-</button>
-                            <span class="quantity"><?= $row['quantity']; ?></span>
+                            <span class="quantity" id="qtty"> <?= $row['quantity']; ?> </span>
                             <button class="quantity-btn plus">+</button>
                         </div>
                     </div>
@@ -68,8 +68,6 @@ $total = 0;
                 </div>
                 <?php $total += $row['price'] * $row['quantity']; ?>
             <?php  } ?>
-
-
         </div>
     </div>
     <div class="cart-summary">
@@ -110,5 +108,11 @@ $total = 0;
         bottom: 50%;
         left: 50%;
         transform: translate(-50%, 50%);
+    }
+
+    .cart-summary h2 {
+        font-size: 2.5em;
+        color: #333;
+        padding: 20px;
     }
 </style>

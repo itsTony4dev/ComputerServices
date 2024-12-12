@@ -44,7 +44,7 @@ $json_data = json_encode(value: $data);
                     <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
                     <ul class="dropdown-menu" id="dropdown-menu">
                         <li><a href="cart.php">Cart</a></li>
-                        <li><a href="history.php">History</a></li>
+                        <li><a href="history.php?page=build">History</a></li>
                         <li><a href="logout.php?page=build">Logout</a></li>
                     </ul>
                 </li>';

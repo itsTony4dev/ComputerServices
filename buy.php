@@ -27,7 +27,7 @@
                     <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
                     <ul class="dropdown-menu" id="dropdown-menu">
                         <li><a href="cart.php">Cart</a></li>
-                        <li><a href="history.php">History</a></li>
+                        <li><a href="history.php?page=buy">History</a></li>
                         <li><a href="logout.php?page=buy">Logout</a></li>
                     </ul>
                 </li>';
