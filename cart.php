@@ -44,36 +44,37 @@ $total = 0;
         </nav>
     </header>
     <div class="cart-container">
-        <h1 class="cart-title">Your Cart</h1>
-        <div class="cart-items">
-            <?php
-            require_once 'connection.php';
-            $user_id = $_SESSION['user_id'];
-            $stmt = "SELECT `cart`.*, `products`.`name`, `products`.`category_id`, `products`.`price`, `products`.`image` FROM `cart` 
-                     JOIN `products` ON `cart`.`product_id` = `products`.`id` WHERE `user_id` = $user_id";
-            $result = $conn->query($stmt);
-            while ($row = $result->fetch_assoc()) { ?>
-                <div class="cart-card" style="position: relative; min-height: 380px;">
-                    <div class="product-info">
-                        <h2 class="product-name"><?= trim($row['name']) == '' ? 'Gaming Pc' : $row['name']; ?></h2>
-                        <img src="uploads/<?= $row['image']; ?>" alt="">
-                        <p class="product-price">$<?= $row['price']; ?></p>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn minus">-</button>
-                            <span class="quantity" id="qtty"> <?= $row['quantity']; ?> </span>
-                            <button class="quantity-btn plus">+</button>
+        <div class="cart-container">
+            <h1 class="cart-title">Your Cart</h1>
+            <div class="cart-items">
+                <?php
+                require_once 'connection.php';
+                $user_id = $_SESSION['user_id'];
+                $stmt = "SELECT `cart`.*, `products`.`name`, `products`.`category_id`, `products`.`price`, `products`.`image` FROM `cart`
+                 JOIN `products` ON `cart`.`product_id` = `products`.`id` WHERE `user_id` = $user_id";
+                $result = $conn->query($stmt);
+                while ($row = $result->fetch_assoc()) { ?>
+                    <div class="cart-card" style="position: relative; min-height: 380px;">
+                        <div class="product-info">
+                            <h2 class="product-name"><?= trim($row['name']) == '' ? 'Gaming Pc' : $row['name']; ?></h2>
+                            <img src="uploads/<?= $row['image']; ?>" alt="">
+                            <p class="product-price">$<?= $row['price']; ?></p>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn minus" data-cart-id="<?= $row['id']; ?>" >-</button>
+                                <span class="quantity" id="qtty-<?= $row['id']; ?>"> <?= $row['quantity']; ?> </span>
+                                <button class="quantity-btn plus" data-cart-id="<?= $row['id']; ?>">+</button>
+                            </div>
                         </div>
+                        <button class="remove-btn"><a href="removeFromCart.php?id=<?= $row['id']; ?>" style="text-decoration: none; color:black;">Remove</a></button>
                     </div>
-                    <button class="remove-btn"><a href="removeFromCart.php?id=<?= $row['id']; ?>" style="text-decoration: none; color:black;">Remove</a></button>
-                </div>
-                <?php $total += $row['price'] * $row['quantity']; ?>
-            <?php  } ?>
+                    <?php $total += $row['price'] * $row['quantity']; ?>
+                <?php  } ?>
+            </div>
         </div>
-    </div>
-    <div class="cart-summary">
-        <h2>Total: $<?= $total; ?></h2>
-        <button class="checkout-btn">Proceed to Checkout</button>
-    </div>
+        <div class="cart-summary">
+            <h2 id="total-price">Total: $<?= $total; ?></h2>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
     </div>
     <footer>
         <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>
