@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['role'] !== 1) {
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+
 require_once 'connection.php';
 
 if (
@@ -7,9 +13,9 @@ if (
 ) {
     $name = $_POST['name'] ?? ' ';
     $stock_quantity = $_POST['stock_quantity'] ?? 0;
-    $price = $_POST['price'] ?? 0.0;
-    $category_id = $_POST['category'] ?? 0;
-    $description = $_POST['description'] ?? '';
+    $price = $_POST['price'];
+    $category_id = $_POST['category'] ;
+    $description = $_POST['description'] ?? ' ';
 
     $uploadDir = 'uploads/';
     $fileName = basename($_FILES['image']['name']);
@@ -21,6 +27,7 @@ if (
         echo "File upload error.";
         exit();
     }
+
 
     if (!is_dir($uploadDir)) {
         if (!mkdir($uploadDir, 0755, true)) {

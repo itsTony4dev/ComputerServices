@@ -2,8 +2,12 @@
 
 require_once "connection.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST["name"]) || empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["confirm-password"])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["name"]) && isset($_POST["username"]) 
+                            && isset($_POST["password"]) && isset($_POST["confirm-password"])) {
+    if (
+        empty(trim($_POST["name"])) || empty(trim($_POST["username"])) ||
+        empty(trim($_POST["password"])) || empty(trim($_POST["confirm-password"]))
+    ) {
         echo "<script>alert('All fields are required. Please fill out the form completely.');</script>";
         exit();
     }
@@ -38,61 +42,69 @@ $conn->close();
 ?>
 
 
-
 <!DOCTYPE html>
 <html lang="utf-8">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Create Account - CT ZONE</title>
     <link rel="icon" href="pictures/loginlogo.png">
     <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div class="container">
-        <img src="pictures/loginlogo.png" alt="">
-        <h1>Create Account</h1>
+        <div class="logo-container">
+            <img src="pictures/loginlogo.png" alt="CT ZONE Logo">
+        </div>
+        <h1><i class="fas fa-user-plus"></i> Create Account</h1>
         <form method="POST">
             <div class="form-group">
                 <label>Name</label>
                 <input type="text" name="name" placeholder="Enter your name" required>
+                <i class="input-icon fas fa-user"></i>
             </div>
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username" placeholder="Enter your username" required>
+                <input type="text" name="username" placeholder="Choose a username" required>
+                <i class="input-icon fas fa-at"></i>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Enter your password" minlength="8" id="passType"
-                    required>
+                <input type="password" name="password" placeholder="Create a password"
+                    minlength="8" id="passType" required>
+                <i class="input-icon fas fa-lock"></i>
             </div>
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" name="confirm-password" placeholder="Re-enter your password" minlength="8"
+                <input type="password" name="confirm-password"
+                    placeholder="Confirm your password" minlength="8"
                     id="confirmPassType" required>
+                <i class="input-icon fas fa-shield"></i>
             </div>
-            <input type="checkbox" onclick="Toggle()">
-            <strong>Show Password</strong>
-            <button type="submit">Sign Up</button>
+            <div class="show-password">
+                <input type="checkbox" onclick="Toggle()" id="showPass">
+                <label for="showPass"><i class="far fa-eye"></i> Show Password</label>
+            </div>
+            <button type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
+            <a href="login.php" class="guest-link">
+                <i class="fas fa-arrow-left"></i> Back to Login
+            </a>
         </form>
-        <a href="login.php" style="text-decoration: none; color: red;"><b>Already have an account?</b> Login here</a>
-        <script>
-            function Toggle() {
-                let txtPass = document.getElementById("passType");
-                let txtConfirmPass = document.getElementById("confirmPassType");
-
-                if (txtPass.type === "password") {
-                    txtPass.type = "text";
-                    txtConfirmPass.type = "text";
-                } else {
-                    txtPass.type = "password";
-                    txtConfirmPass.type = "password";
-                }
-            }
-        </script>
     </div>
+
+    <script>
+        function Toggle() {
+            let txtPass = document.getElementById("passType");
+            let txtConfirmPass = document.getElementById("confirmPassType");
+            const type = txtPass.type === "password" ? "text" : "password";
+            txtPass.type = type;
+            txtConfirmPass.type = type;
+        }
+    </script>
 </body>
 
 </html>

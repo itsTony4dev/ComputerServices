@@ -9,6 +9,7 @@ body {
   line-height: 1.6;
   background: linear-gradient(135deg, #f5f7fa 0%, #e8edf2 100%);
   position: relative;
+  
 }
 
 body::before {
@@ -45,20 +46,34 @@ nav {
 
 .logo {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
   margin-inline: 50px;
+  transition: all 0.3s ease;
 }
 
-.logo img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+.logo i {
+  font-size: 32px;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
+
 .logo a {
   color: #fff;
   text-decoration: none;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo:hover i {
+  transform: scale(1.1);
+  color: #c70000;
+}
+
+.logo:hover a {
+  color: #c70000;
 }
 
 .nav-links ul {
@@ -98,7 +113,8 @@ nav {
 }
 
 .hero {
-  background-image: url("../pictures/HomeWallpaper.webp");
+  /* background-image: url("../pictures/HomeWallpaper.webp"); */
+  background-image: url("../pictures/pc-backg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

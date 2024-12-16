@@ -1,15 +1,21 @@
 <?php
+session_start();
 require_once "connection.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    session_start();
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["username"]) && isset($_POST["password"]) && 
+    !empty(trim($_POST["username"])) && !empty(trim($_POST["password"]))) {
 
     $username = $_POST["username"];
     $inputPassword = $_POST["password"];
 
     $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $stmt->bind_param("s", $username);
-    $stmt->execute();
+
+    if (!$stmt->execute()) {
+        echo header("Location: login.php");
+        exit();
+    }
+
     $result = $stmt->get_result();
 
     if ($result->num_rows === 0) {
@@ -47,44 +53,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Login - CT ZONE</title>
     <link rel="icon" href="pictures/loginlogo.png">
     <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div class="container">
-        <img src="pictures/loginlogo.png" alt="">
-        <h1>Login</h1>
+        <div class="logo-container">
+            <img src="pictures/loginlogo.png" alt="CT ZONE Logo">
+        </div>
+        <h1><i class="fas fa-computer"></i> Welcome Back</h1>
         <form method="POST">
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Enter your username" required>
+                <i class="input-icon fas fa-user"></i>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" placeholder="Enter your password" minlength="8" id="typepass"
-                    required>
+                <input type="password" name="password" placeholder="Enter your password"
+                    minlength="8" id="typepass" required>
+                <i class="input-icon fas fa-lock"></i>
             </div>
-            <input type="checkbox" onclick="Toggle()">
-            <strong>Show Password</strong>
-            <button type="submit">Login</button>
-            <button><a href="createAccount.php" style="text-decoration: none; color:black;">Create Account</a></button>
-            <a href="home.php" style="text-decoration: none; color:#c70000;"><i class="fa-solid fa-user fa-sm"></i>&nbsp; Enter as Guest</a>
+            <div class="show-password">
+                <input type="checkbox" onclick="Toggle()" id="showPass">
+                <label for="showPass"><i class="far fa-eye"></i> Show Password</label>
+            </div>
+            <button type="submit"><i class="fas fa-right-to-bracket"></i> Sign In</button>
+            <button type="button" class="create-account"
+                onclick="window.location.href='createAccount.php'">
+                <i class="fas fa-user-plus"></i> Create Account
+            </button>
+            <a href="home.php" class="guest-link">
+                <i class="fas fa-user-secret"></i> Continue as Guest
+            </a>
         </form>
-        <script>
-            function Toggle() {
-                let txtPass = document.getElementById("typepass");
-
-                if (txtPass.type === "password") {
-                    txtPass.type = "text";
-                } else {
-                    txtPass.type = "password";
-                }
-            }
-        </script>
     </div>
+
+    <script>
+        function Toggle() {
+            let txtPass = document.getElementById("typepass");
+            txtPass.type = txtPass.type === "password" ? "text" : "password";
+        }
+    </script>
 </body>
 
 </html>

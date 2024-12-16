@@ -8,45 +8,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Purchase History</title>
+    <title>Purchase History - CT ZONE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            min-height: 100vh;
+            background-image: url('pictures/pc2-backg.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
             padding: 20px;
-            background-image: url('pictures/home.webp');
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            z-index: -1;
         }
 
         .purchase-container {
             width: 100%;
-            max-width: 750px;
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
             overflow: hidden;
             z-index: 1000;
         }
 
         .purchase-header {
-            background-color: #FF3131;
+            background: #c70000;
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
         }
 
         .purchase-header h1 {
-            font-weight: 800;
+            font-size: 2rem;
+            font-weight: 600;
             letter-spacing: 1px;
         }
 
@@ -57,120 +75,171 @@
 
         .purchase-table th,
         .purchase-table td {
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            border-bottom: 1px solid #e9e9e9;
-            font-weight: 800;
-        }
-
-        .purchase-table td:nth-child(2){
-            font-size: 21px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .purchase-table th {
-            background-color: #121212;
-            color: white;
-            text-transform: uppercase;
-            font-size: 0.9em;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 1rem;
+            font-weight: 500;
             letter-spacing: 1px;
         }
 
         .purchase-table tr:hover {
-            background-color: #f8f8f8;
-            transition: background-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
         }
 
         .order-date {
-            color: #666;
-            font-size: 1em;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
         }
 
         .total-price {
-            font-weight: bold;
-            color: #FF3131;
-            font-size: 1.2em;
-        }
-
-        @media (max-width: 600px) {
-            .purchase-container {
-                width: 100%;
-                border-radius: 0;
-            }
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
+            color: #c70000;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
 
         .view-details {
-            background-color: #FF3131;
+            background: #c70000;
             color: white;
             border: none;
-            padding: 8px 16px;
-            font-size: 0.9em;
-            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .view-details:hover {
-            background-color: #d42424;
-        }
-
-        #logo {
-            position: absolute;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 190px;
-            height: 120px;
-            z-index: 100022;
+            background: #ff0000;
+            transform: translateY(-2px);
         }
 
         .back-button {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
+            padding: 20px;
         }
 
         .back-button a {
-            background-color: #121212;
+            background: rgba(0, 0, 0, 0.5);
             color: white;
             border: none;
-            padding: 8px 16px;
-            font-size: 0.9em;
-            border-radius: 4px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             text-decoration: none;
             display: flex;
             align-items: center;
-            margin-left: 35px;
-            margin-bottom: 5px;
+            gap: 10px;
         }
 
         .back-button a:hover {
-            background-color: #FF3131;
+            background: #c70000;
+            transform: translateY(-2px);
         }
 
-        .back-button i {
-            margin-right: 5px;
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .details-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            color: white;
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .details-header h2 {
+            color: #c70000;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-button {
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: #c70000;
+        }
+
+        .product-list {
+            list-style: none;
+        }
+
+        .product-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            color: #c70000;
+            font-weight: 600;
         }
     </style>
 </head>
 
 <body>
-    <div class="overlay"></div>
-    <img src="pictures/loginlogo.png" alt="" id="logo">
     <div class="purchase-container">
         <div class="purchase-header">
-            <h1>Purchase History</h1>
+            <h1><i class="fas fa-history"></i> Purchase History</h1>
         </div>
         <table class="purchase-table">
             <thead>
@@ -204,7 +273,7 @@
             </tbody>
         </table>
         <div class="back-button">
-            <a href="<?=$page?>.php"><i class="fa-solid fa-left-long fa-xl"></i> Back</a>
+            <a href="<?=$page?? 'home'?>.php"><i class="fa-solid fa-left-long fa-xl"></i> Back</a>
         </div>
     </div>
     <div class="modal-overlay" id="purchaseHistoryModal">
@@ -239,12 +308,10 @@
     </div>
 
     <script>
-        // Function to close the modal
         function closeModal() {
             document.getElementById('purchaseHistoryModal').style.display = 'none';
         }
 
-        // Optional: Open modal function if you want to trigger it programmatically
         function openModal() {
             document.getElementById('purchaseHistoryModal').style.display = 'flex';
         }
@@ -252,79 +319,3 @@
 </body>
 
 </html>
-
-<style>
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .details-container {
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            padding: 30px;
-            max-width: 600px;
-            width: 100%;
-            position: relative;
-        }
-        .details-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .details-header h2 {
-            font-weight: 300;
-            color:#FF3131;
-        }
-        .close-button {
-            background-color: #121212;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            font-size: 0.9em;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .close-button:hover {
-            background-color: #000;
-        }
-        .product-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .product-list li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #e9e9e9;
-        }
-        .product-info {
-            display: flex;
-            align-items: center;
-        }
-        .product-image {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        .product-name {
-            font-weight: bold;
-        }
-        .product-price {
-            color:#FF3131;
-            font-weight: bold;
-        }
-    </style>

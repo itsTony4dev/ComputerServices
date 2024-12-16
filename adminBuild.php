@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['role'] !== 1) {
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
 require_once "connection.php";
 
@@ -21,14 +26,15 @@ $json_data = json_encode(value: $data);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/build.css" />
     <link rel="icon" href="pictures/loginlogo.png">
-    <title>Computer Services</title>
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
+    <title>CT ZONE</title>
 </head>
 
 <body>
     <header>
         <nav>
             <div class="logo">
-                <a href="admin.php"><img src="pictures/Logo.png" alt="" /></a>
+                <a href="admin.php"><i class="fas fa-microchip"></i></a>
                 <a href="admin.php">CT ZONE</a>
             </div>
             <div class="nav-links">
@@ -46,7 +52,7 @@ $json_data = json_encode(value: $data);
             </div>
         </nav>
     </header>
-    <main>
+    <main ">
         <section class="hero">
             <h1>Available Parts</h1>
             <p>Choose from a wide range of components to create your perfect custom build.</p>
@@ -63,9 +69,7 @@ $json_data = json_encode(value: $data);
                     <option value="price-desc">Price (High to Low)</option>
                 </select>
             </div>
-            <div class="component-list">
-
-            </div>
+            <div class="component-list"></div>
         </section>
 
 
@@ -73,12 +77,11 @@ $json_data = json_encode(value: $data);
             const componentList = document.querySelector('.component-list');
             const sortSelect = document.getElementById('sort');
 
-            var components = <?php echo $json_data; ?>;
-            console.log(components);
+            var components = <?= $json_data; ?>;
 
             function createComponentCard(component) {
                 const card = document.createElement('div');
-                card.classList.add('component-card');
+                card.classList.add('component-card'); 
                 card.innerHTML = `
                 <img src="uploads/${component.image}" alt="${component.name}">
                 <h3>${component.name}</h3>
@@ -93,10 +96,6 @@ $json_data = json_encode(value: $data);
             `;
                 return card;
             }
-
-            // Function to render component cards
-
-
 
             function renderComponents(sortOption) {
                 componentList.innerHTML = '';
@@ -122,10 +121,8 @@ $json_data = json_encode(value: $data);
                 });
             }
 
-            // Initial render
             renderComponents();
 
-            // Event listener for sort select
             sortSelect.addEventListener('change', (event) => {
                 const sortOption = event.target.value;
                 renderComponents(sortOption)
@@ -143,7 +140,7 @@ $json_data = json_encode(value: $data);
             <select name="category" id="category">
                 <option value="">Select Category</option>
                 <?php
-                $sql = "SELECT * FROM category";
+                $sql = "SELECT * FROM category WHERE id != 1";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     echo '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';

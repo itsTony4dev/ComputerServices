@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['role'] !== 1) {
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +50,7 @@ if (isset($_GET['id'])) {
 
 
             <label for="price" >Price</label>
-            <input type="number" id="price" value="<?= $product['price'] ?>" name="price" " required>
+            <input type="number" id="price" value="<?= $product['price'] ?>" name="price"  required>
 
             <button type="submit" name="edit" class="btn">EDIT</button>
             <button class="btn" style=" background-color:#333">

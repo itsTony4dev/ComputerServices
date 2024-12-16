@@ -5,8 +5,27 @@
   }
 body {
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-image: url('../pictures/pc2-backg.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: -1;
 }
 
 header {
@@ -26,23 +45,35 @@ nav {
 }
 .logo {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
   margin-inline: 50px;
+  transition: all 0.3s ease;
 }
 
-.logo img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+.logo i {
+  font-size: 32px;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .logo a {
   color: #fff;
   text-decoration: none;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Poppins', sans-serif;
 }
 
+.logo:hover i {
+  transform: scale(1.1);
+  color: #c70000;
+}
+
+.logo:hover a {
+  color: #c70000;
+}
 
 .nav-links ul {
   list-style-type: none;
@@ -86,17 +117,16 @@ nav {
   max-width: 1200px;
   margin: 20px auto;
   padding: 20px;
-  background: #fff;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .cart-title {
   text-align: center;
-  margin-bottom: 40px;
-  color: #c70000;
-  text-shadow: 0.5px 0.5px 1px rgb(122, 121, 121);
-  font-size: 40px;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2.5em;
 }
 
 .cart-items {
@@ -107,9 +137,11 @@ nav {
 }
 
 .cart-card {
-  background: #e4e4e4;
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
-  padding: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -192,8 +224,12 @@ nav {
 }
 
 .cart-summary {
-  text-align: center;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 10px;
   margin-top: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .cart-summary h2 {
@@ -231,6 +267,8 @@ footer {
     text-align: center;
     padding: 20px;
     margin-top: 20px;
+    bottom: 0;
+    width: 100%;
   }
 
   .nav-links .dropdown {
@@ -241,7 +279,7 @@ footer {
   .nav-links .dropdown-menu {
     display: none;
     position: absolute;
-    top: 253%;
+    top: 209%;
     right: -90px;
     min-width: 150px;
     height: 125px;
@@ -261,5 +299,7 @@ footer {
     color: black;
     display: block;
   }
+  
+  /* confirm order */
   
   

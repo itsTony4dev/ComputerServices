@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true || $_SESSION['role'] !== 1) {
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,14 +16,14 @@
     <link rel="icon" href="pictures/loginlogo.png">
     <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
 
-    <title>Computer Services</title>
+    <title>CT ZONE</title>
 </head>
 
 <body>
     <header>
         <nav>
             <div class="logo">
-                <a href="admin.php"><img src="pictures/Logo.png" alt=""></a>
+                <a href="admin.php"><i class="fas fa-microchip"></i></a>
                 <a href="admin.php">CT ZONE</a>
             </div>
             <div class="nav-links">

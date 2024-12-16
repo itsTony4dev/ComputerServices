@@ -23,14 +23,16 @@ $json_data = json_encode(value: $data);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/build.css" />
     <link rel="icon" href="pictures/loginlogo.png">
-    <title>Computer Services</title>
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
+    <title>CT ZONE</title>
 </head>
 
 <body>
+    <script src="js/addToCart.js"></script>
     <header>
         <nav>
             <div class="logo">
-                <a href="home.php"><img src="pictures/Logo.png" alt="" /></a>
+                <a href="home.php"><i class="fas fa-microchip"></i></a>
                 <a href="home.php">CT ZONE</a>
             </div>
             <div class="nav-links">
@@ -55,7 +57,7 @@ $json_data = json_encode(value: $data);
             </div>
         </nav>
     </header>
-    <main>
+    <main >
         <section class="hero">
             <h1>Available Parts</h1>
             <p>Choose from a wide range of components to create your perfect custom build.</p>
@@ -95,21 +97,10 @@ $json_data = json_encode(value: $data);
                 <h3>${component.name}</h3>
                 <p>${component.cat_name}</p>
                 <p class="price">$${component.price}</p>
-                <form method="POST" action="addToCart.php?page=build">
-                    <input type="hidden" name="component_id" value="${component.id}">
-                    <button class="btn" type="submit" name="addToCart">Add to cart</button>
-                </form>
+                <button class="btn addToCartBtn" type="submit" data-component-id="${component.id}">Add to cart</button>
             `;
                 return card;
             }
-
-            let isLoggedIn = <?php echo json_encode(value: $_SESSION['is_logged_in']); ?>;
-
-            const logged = () => {
-                if (!isLoggedIn) {
-                    alert("You must be logged in to add to cart");
-                }
-            };
 
 
             // Function to render component cards

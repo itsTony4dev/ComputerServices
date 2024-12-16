@@ -7,6 +7,26 @@
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-image: url('../pictures/pc2-backg.webp');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  z-index: -1;
 }
 
 header {
@@ -27,20 +47,34 @@ nav {
 
 .logo {
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
   margin-inline: 50px;
+  transition: all 0.3s ease;
 }
 
-.logo img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+.logo i {
+  font-size: 32px;
+  color: #fff;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
+
 .logo a {
   color: #fff;
   text-decoration: none;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.logo:hover i {
+  transform: scale(1.1);
+  color: #c70000;
+}
+
+.logo:hover a {
+  color: #c70000;
 }
 
 .nav-links ul {
@@ -103,6 +137,10 @@ nav {
 
 .pc-listings {
   padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  margin: 20px auto;
+  max-width: 1400px;
 }
 
 .pc-listings h2 {
@@ -161,19 +199,23 @@ button:hover {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 main section:nth-child(2) {
-  background-color: #f4f4f4;
+  background-color: #f4f4f4a8;
 }
 
 table {
   margin-inline: auto;
   border-collapse: collapse;
   width: 80%;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 th,
 td {
   padding: 12px 20px;
   text-align: center;
+  background-color: rgba(219, 219, 219, 0.8);
 }
 
 th {

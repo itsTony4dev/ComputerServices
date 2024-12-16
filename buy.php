@@ -1,19 +1,27 @@
+<?php
+session_start();
+if($_SESSION['role'] === 1){
+    header("Location: admin.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+robot ioname="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/buy.css" />
     <link rel="icon" href="pictures/loginlogo.png">
-    <title>Computer Services</title>
+    <title>CT ZONE</title>
+    <script src="js/addToCart.js"></script>
+    <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <header>
         <nav>
             <div class="logo">
-                <a href="home.php"><img src="pictures/Logo.png" alt=""></a>
+                <a href="home.php"><i class="fas fa-microchip"></i></a>
                 <a href="home.php">CT ZONE</a>
             </div>
             <div class="nav-links">
@@ -21,7 +29,7 @@
                     <li><a href="home.php">Home</a></li>
                     <li><a href="home.php#buy-Build">Buy</a></li>
                     <li><a href="home.php#contact">Repair</a></li>
-                    <?php session_start();
+                    <?php 
                     if ($_SESSION['is_logged_in']) {
                         echo '<li class="dropdown">
                     <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
@@ -40,7 +48,7 @@
         </nav>
     </header>
 
-    <main>
+    <main >
         <section class="hero">
             <h1>Buy Pre-built PCs</h1>
             <p>
@@ -73,30 +81,19 @@
                     }
                     echo "</td>";
                     echo "<td> <p>$" . $row["price"] . "</p>
-                    <form method='POST' action='addToCart.php?page=buy'>
-                    <input type='hidden' name='component_id' value='" . $row["id"] . "'>
-                    <button class=btn onclick='logged()' type='submit' name='addToCart'>Add to cart</button>
-                    </form>
+                    <button class='btn addToCartBtn' data-component-id='" . $row["id"] . "'>Add to cart</button>
                     </td>";
                     echo "</tr>";
                 }
                 ?>
 
                 <script>
-                    let isLoggedIn = <?php echo json_encode(value: $_SESSION['is_logged_in']); ?>;
-
-                    const logged = () => {
-                        if (!isLoggedIn) {
-                            alert("You must be logged in to add to cart");
-                        }
-                    };
 
                     const show = () => {
                         if (document.getElementById('dropdown-menu').style.display != "block") {
-
                             document.getElementById('dropdown-menu').style.display = "block";
                         } else {
-                           return document.getElementById('dropdown-menu').style.display = "none";
+                            return document.getElementById('dropdown-menu').style.display = "none";
                         }
                     }
                 </script>

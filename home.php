@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" href="pictures/loginlogo.png">
     <script src="https://kit.fontawesome.com/9d214354b3.js" crossorigin="anonymous"></script>
-    <title>Computer Services</title>
+    <title>CT ZONE</title>
 </head>
 
 <body>
     <header>
         <nav>
             <div class="logo">
-                <a href="home.php"><img src="pictures/Logo.png" alt=""/></a>
+                <!-- img src="pictures/Logo.png" alt=""/> -->
+                <a href="home.php"><i class="fas fa-microchip"></i></a>
                 <a href="home.php">CT ZONE</a>
             </div>
             <div class="nav-links">
@@ -40,7 +41,7 @@
 
         </nav>
     </header>
-    <main style="background-image: url('pictures/home.webp');">
+    <main style="background-image: url('pictures/pc2-backg.webp');">
         <section class="hero">
             <h1>Expert PC Repair & Buy Services</h1>
             <p>Get your PC fixed or buy your favourite specs.</p>
@@ -70,7 +71,7 @@
         </section>
 
         <section class="buy-Build" id="buy-Build">
-            <h2>Pre-built and Parts</h2>
+            <h2>Pcs and Parts</h2>
             <div class="buy-Build-cards">
                 <div class="buy-Build-card">
                     <img src="pictures/R.jpeg" alt="Buy PC" style="width: 300px; height: 168px" loading="lazy"/>

@@ -8,11 +8,11 @@ if (
 
 
     $id = $_POST['id'];
-    $name = $_POST['name'] || ' ';
-    $description = $_POST['description'];
-    $stock_quantity = $_POST['stock_quantity'] || 0;
+    $name = $_POST['name'] ;
+    $description = $_POST['description'] ;
+    $stock_quantity = $_POST['stock_quantity'] ;
     $price = $_POST['price'];
-    $category_id = $_POST['category'] || 1;
+    $category_id = $_POST['category'];
     $fileName = $_POST['old_image'];
 
     if ($_FILES['image']['error'] == UPLOAD_ERR_OK) {
@@ -31,7 +31,8 @@ if (
 
     if ($_POST['cat_id'] != 1) {
         $stmt = $conn->prepare("UPDATE `products` SET `name`=?, `category_id`=?, `description`='', `price`=?, `stock_quantity`=?, `image`=? WHERE id=?");
-        $stmt->bind_param("siiisi", $name, $category_id, $price, $stock_quantity, $fileName, $id);
+        $stmt->bind_param("siiisi", $name,  $category_id, $price, $stock_quantity, $fileName, $id);
+
     } else {
         $stmt = $conn->prepare("UPDATE `products` SET  `description`=?, `price`=?, `image`=? WHERE id=?");
         $stmt->bind_param("sisi", $description, $price, $fileName, $id);
