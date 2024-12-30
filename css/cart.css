@@ -279,10 +279,10 @@ footer {
   .nav-links .dropdown-menu {
     display: none;
     position: absolute;
-    top: 209%;
+    top: 185%;
     right: -90px;
     min-width: 150px;
-    height: 125px;
+    height: 150px;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;

@@ -1,5 +1,6 @@
 <?php
-    $page = $_GET['page'];
+session_start();
+$page = $_GET['page'];
 ?>
 
 <!DOCTYPE html>
@@ -250,72 +251,70 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="order-date">January 15, 2024</td>
-                    <td class="total-price">$349.49</td>
-                    <td><button class="view-details" onclick="openModal()">View Details</button></td>
-                </tr>
-                <tr>
-                    <td class="order-date">February 03, 2024</td>
-                    <td class="total-price">$279.50</td>
-                    <td><button class="view-details" onclick="openModal()">View Details</button></td>
-                </tr>
-                <tr>
-                    <td class="order-date">March 22, 2024</td>
-                    <td class="total-price">$728.99</td>
-                    <td><button class="view-details" onclick="openModal()">View Details</button></td>
-                </tr>
-                <tr>
-                    <td class="order-date">April 10, 2024</td>
-                    <td class="total-price">$199.75</td>
-                    <td><button class="view-details" onclick="openModal()">View Details</button></td>
-                </tr>
+                <?php
+                require_once "connection.php";
+                $stmt = $conn->prepare("SELECT * FROM `orders` WHERE `user_id` = ?");
+                $stmt->bind_param("i", $_SESSION["user_id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($row = $result->fetch_assoc()) {
+                    $dateString = $row["created_at"];
+                    $timestamp = strtotime($dateString);
+                    $formattedDate = date('F j, Y', $timestamp);
+                    echo "<tr >";
+                    echo "<td class='order-date'>" .  $formattedDate   . "</td>";
+                    echo "<td class='total-price'>$" . $row["total_price"] . "</td>";
+                    echo "<td><button class='view-details' data-order-id='" . $row["id"] . "' onclick='openModal(" . $row["id"] . ")'>View Details</button></td>";
+                    echo "</tr>";
+                }
+                ?>
             </tbody>
         </table>
         <div class="back-button">
-            <a href="<?=$page?? 'home'?>.php"><i class="fa-solid fa-left-long fa-xl"></i> Back</a>
-        </div>
-    </div>
-    <div class="modal-overlay" id="purchaseHistoryModal">
-        <div class="details-container">
-            <div class="details-header">
-                <h2>Order Details</h2>
-                <button class="close-button" onclick="closeModal()">Close</button>
-            </div>
-            <ul class="product-list">
-                <li>
-                    <div class="product-info">
-                        <img src="https://via.placeholder.com/50" alt="Product Image" class="product-image">
-                        <div>
-                            <div class="product-name">Vintage Leather Jacket</div>
-                            <div class="product-price">$149.99</div>
-                        </div>
-                    </div>
-                    <div class="product-quantity">1</div>
-                </li>
-                <li>
-                    <div class="product-info">
-                        <img src="https://via.placeholder.com/50" alt="Product Image" class="product-image">
-                        <div>
-                            <div class="product-name">Classic White Shirt</div>
-                            <div class="product-price">$49.50</div>
-                        </div>
-                    </div>
-                    <div class="product-quantity">1</div>
-                </li>
-            </ul>
-        </div>
-    </div>
+   <a href="<?= $page ?? 'home' ?>.php"><i class="fa-solid fa-left-long fa-xl"></i> Back</a>
+</div>
+</div>
 
-    <script>
-        function closeModal() {
-            document.getElementById('purchaseHistoryModal').style.display = 'none';
-        }
+<div class="modal-overlay" id="purchaseHistoryModal">
+   <div class="details-container">
+       <div class="details-header">
+           <h2>Order Details</h2>
+           <button class="close-button" onclick="closeModal()">Close</button>
+       </div>
+       <ul class="product-list" id="modalProductList">
+       </ul>
+   </div>
+</div>
 
-        function openModal() {
-            document.getElementById('purchaseHistoryModal').style.display = 'flex';
-        }
-    </script>
+<script>
+function closeModal() {
+   document.getElementById('purchaseHistoryModal').style.display = 'none';
+}
+
+function openModal(orderId) {
+   fetch('get_order_items.php?order_id=' + orderId)
+       .then(response => response.json())
+       .then(data => {
+           updateModalContent(data);
+           document.getElementById('purchaseHistoryModal').style.display = 'flex';
+       });
+}
+
+function updateModalContent(data) {
+   const productList = document.getElementById('modalProductList');
+   productList.innerHTML = data.items.map(item => `
+       <li>
+           <div class="product-info">
+               <img src="uploads/${item.image}" alt="Product Image" class="product-image">
+               <div>
+                   <div class="product-name">${(item.name).trim() == '' ? 'Gaming Pc' : item.name}</div>
+                   <div class="product-price">$${item.price}</div>
+               </div>
+           </div>
+           <div class="product-quantity">Quantity: ${item.quantity}</div>
+       </li>
+   `).join('');
+}
+</script>
 </body>
-
 </html>

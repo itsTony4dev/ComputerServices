@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         while ($row = $result->fetch_assoc()) {
             $product_id = $row['product_id'];
             $quantity = $row['quantity'];
-            $price = $row['price'];
+            $price = $row['price'] * $quantity;
 
             $insert_stmt->bind_param('iiid', $order_id, $product_id, $quantity, $price);
 
