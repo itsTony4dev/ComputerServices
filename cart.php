@@ -1,6 +1,7 @@
 <?php
 session_start();
 $total = 0;
+$hasItems = false;
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +53,9 @@ $total = 0;
                 $stmt = "SELECT `cart`.*, `products`.`name`, `products`.`category_id`, `products`.`price`, `products`.`image` FROM `cart`
                  JOIN `products` ON `cart`.`product_id` = `products`.`id` WHERE `user_id` = $user_id";
                 $result = $conn->query($stmt);
+                if ($result && $result->num_rows > 0) {
+                    $hasItems = true;
+                }
                 while ($row = $result->fetch_assoc()) { ?>
                     <div class="cart-card" style="position: relative; min-height: 380px;">
                         <div class="product-info">
@@ -72,7 +76,9 @@ $total = 0;
         </div>
         <div class="cart-summary">
             <h2 id="total-price">Total: $<?= $total; ?></h2>
-            <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+            <button class="checkout-btn" id="checkoutBtn" <?= !$hasItems ? 'disabled' : '' ?>>
+                Proceed to Checkout
+            </button>
         </div>
     </div>
     <div id="checkoutModal" class="modal">
@@ -227,6 +233,15 @@ $total = 0;
         color: black;
         text-decoration: none;
         cursor: pointer;
+    }
+
+    button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+
+    button:disabled:hover {
+        background-color: #cccccc;
     }
 
     .proceed-btn {
@@ -396,10 +411,37 @@ $total = 0;
     }
 </style>
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Step 1 validation
+        const step1Inputs = ['phone', 'email'];
+        const step1Button = document.querySelector('#step1 .next-btn');
+
+        step1Inputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                step1Button.disabled = !step1Inputs.every(inputId =>
+                    document.getElementById(inputId).value.trim() !== '');
+            });
+        });
+
+        // Step 2 validation
+        const step2Inputs = ['fullName', 'address', 'city', 'state'];
+        const step2Button = document.querySelector('#step2 .next-btn');
+
+        step2Inputs.forEach(id => {
+            document.getElementById(id).addEventListener('input', () => {
+                step2Button.disabled = !step2Inputs.every(inputId =>
+                    document.getElementById(inputId).value.trim() !== '');
+            });
+        });
+
+        // Initially disable buttons
+        step1Button.disabled = true;
+        step2Button.disabled = true;
+    });
+
+
     var modal = document.getElementById("checkoutModal");
-
     var btn = document.getElementById("checkoutBtn");
-
     var span = document.getElementsByClassName("close")[0];
 
     btn.onclick = function() {
@@ -461,10 +503,7 @@ $total = 0;
                     throw new Error(orderResult.message);
                 }
 
-
-
                 const orderId = orderResult.order_id;
-
 
                 const orderData = {
                     phone: document.getElementById('phone').value,

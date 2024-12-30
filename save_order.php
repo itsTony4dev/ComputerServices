@@ -6,7 +6,7 @@ header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents('php://input'), true);
-    if (!isset($data['total_price'])) {
+    if (!isset($data['total_price']) && $data['total_price'] === 0) {
         echo json_encode([
             'success' => false,
             'message' => 'Invalid data'
