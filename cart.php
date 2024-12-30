@@ -136,7 +136,7 @@ $total = 0;
                     </div>
                     <div class="buttons-group">
                         <button class="back-btn" data-back="2"><i class="fas fa-arrow-left"></i> Back</button>
-                        <button class="confirm-btn" id="confirmOrder">Confirm Order</button>
+                        <button class="confirm-btn" id="confirmOrder" onclick="">Confirm Order</button>
                     </div>
                 </div>
 
@@ -156,7 +156,8 @@ $total = 0;
     <p>&copy; 2024 CT ZONE Repair & Buy. All rights reserved.</p>
 </footer>
 
-</html><style>
+</html>
+<style>
     .remove-btn {
         position: absolute;
         bottom: 10px;
@@ -455,7 +456,8 @@ $total = 0;
                 address: document.getElementById('address').value,
                 city: document.getElementById('city').value,
                 state: document.getElementById('state').value,
-                paymentMethod: document.querySelector('input[name="payment"]:checked').value
+                paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+                totalprice: <?= $total ?>
             };
 
             // Send order data to server (you'll need to implement this)
