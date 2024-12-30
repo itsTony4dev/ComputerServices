@@ -136,7 +136,7 @@ $total = 0;
                     </div>
                     <div class="buttons-group">
                         <button class="back-btn" data-back="2"><i class="fas fa-arrow-left"></i> Back</button>
-                        <button class="confirm-btn" id="confirmOrder" onclick="">Confirm Order</button>
+                        <button class="confirm-btn" id="confirmOrder" >Confirm Order</button>
                     </div>
                 </div>
 
