@@ -66,8 +66,8 @@ $total = 0;
                         </div>
                         <button class="remove-btn"><a href="removeFromCart.php?id=<?= $row['id']; ?>" style="text-decoration: none; color:black;">Remove</a></button>
                     </div>
-                    <?php $total += $row['price'] * $row['quantity']; ?>
-                <?php  } ?>
+                <?php $total += $row['price'] * $row['quantity'];
+                } ?>
             </div>
         </div>
         <div class="cart-summary">
@@ -136,7 +136,7 @@ $total = 0;
                     </div>
                     <div class="buttons-group">
                         <button class="back-btn" data-back="2"><i class="fas fa-arrow-left"></i> Back</button>
-                        <button class="confirm-btn" id="confirmOrder" >Confirm Order</button>
+                        <button class="confirm-btn" id="confirmOrder">Confirm Order</button>
                     </div>
                 </div>
 
@@ -144,8 +144,8 @@ $total = 0;
                     <div class="success-message">
                         <i class="fas fa-check-circle"></i>
                         <h1>Thanks for shopping with us!</h1>
-                        <p>Your order will be delivered to your address within 3 days max <i class="fa-solid fa-truck"></i></p>
-                        <a href="cart.php" class="proceed-btn">Back To Site</a>
+                        <p>Your order will be delivered to your address within 3 days max. <span>&#128666;</span></p>
+                        <a href="home.php" class="proceed-btn">Back To Site</a>
                     </div>
                 </div>
             </div>
@@ -396,40 +396,34 @@ $total = 0;
     }
 </style>
 <script>
-    // Get the modal
     var modal = document.getElementById("checkoutModal");
 
-    // Get the button that opens the modal
     var btn = document.getElementById("checkoutBtn");
 
-    // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the button, open the modal 
     btn.onclick = function() {
         modal.style.display = "block";
     }
 
-    // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
     }
 
-    // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', async function() {
         const steps = document.querySelectorAll('.step');
         const contents = document.querySelectorAll('.step-content');
         const nextBtns = document.querySelectorAll('.next-btn');
         const backBtns = document.querySelectorAll('.back-btn');
         const confirmBtn = document.getElementById('confirmOrder');
 
-        // Handle next button clicks
+
         nextBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const nextStep = btn.dataset.next;
@@ -437,7 +431,7 @@ $total = 0;
             });
         });
 
-        // Handle back button clicks
+
         backBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const prevStep = btn.dataset.back;
@@ -445,23 +439,87 @@ $total = 0;
             });
         });
 
-        // Handle confirm order
-        confirmBtn.addEventListener('click', () => {
-            // Here you would typically send the order data to your server
-            // For now, we'll just show the success message
-            const orderData = {
-                phone: document.getElementById('phone').value,
-                email: document.getElementById('email').value,
-                fullName: document.getElementById('fullName').value,
-                address: document.getElementById('address').value,
-                city: document.getElementById('city').value,
-                state: document.getElementById('state').value,
-                paymentMethod: document.querySelector('input[name="payment"]:checked').value,
-                totalprice: <?= $total ?>
-            };
 
-            // Send order data to server (you'll need to implement this)
-            saveOrder(orderData);
+        confirmBtn.addEventListener('click', async () => {
+            try {
+
+                const priceData = {
+                    total_price: <?= $total ?>
+                };
+
+                const orderResponse = await fetch('save_order.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(priceData)
+                });
+
+                const orderResult = await orderResponse.json();
+
+                if (!orderResult.success) {
+                    throw new Error(orderResult.message);
+                }
+
+
+
+                const orderId = orderResult.order_id;
+
+
+                const orderData = {
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value,
+                    fullName: document.getElementById('fullName').value,
+                    address: document.getElementById('address').value,
+                    city: document.getElementById('city').value,
+                    state: document.getElementById('state').value,
+                    paymentMethod: document.querySelector('input[name="payment"]:checked').value,
+                    orderId
+                };
+
+
+                const customerResponse = await fetch('save_customer_details.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderData)
+                });
+
+                const customerResult = await customerResponse.json();
+                alert(customerResult.message);
+
+
+                const orderItemResponse = await fetch('save_order_items.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        orderId: orderId
+                    })
+                });
+
+                if (!orderItemResponse.ok) {
+                    throw new Error(`HTTP error! status: ${orderItemResponse.status}`);
+                }
+
+                const orderItemResult = await orderItemResponse.json();
+                console.log('Order items result:', orderItemResult)
+
+                if (orderItemResult.success) {
+
+                    document.getElementById('success').classList.add('active');
+                    document.querySelectorAll('.step-content:not(#success)').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                } else {
+                    throw new Error(orderItemResult.message);
+                }
+
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
         });
 
         function showStep(stepNumber) {
@@ -482,31 +540,5 @@ $total = 0;
             }
         }
 
-        function saveOrder(orderData) {
-            // Here you would typically make an AJAX call to save the order
-            // For now, we'll just show the success message
-            fetch('save_order.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(orderData)
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        document.getElementById('success').classList.add('active');
-                        document.querySelectorAll('.step-content:not(#success)').forEach(el => {
-                            el.classList.remove('active');
-                        });
-                    } else {
-                        alert('There was an error processing your order. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('There was an error processing your order. Please try again.');
-                });
-        }
     });
 </script>
