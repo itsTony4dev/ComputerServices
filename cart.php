@@ -489,7 +489,7 @@ $hasItems = false;
                     total_price: <?= $total ?>
                 };
 
-                const orderResponse = await fetch('save_order.php', {
+                const orderResponse = await fetch('saveOrder.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -517,7 +517,7 @@ $hasItems = false;
                 };
 
 
-                const customerResponse = await fetch('save_customer_details.php', {
+                const customerResponse = await fetch('saveCustomerDetails.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -529,7 +529,7 @@ $hasItems = false;
                 alert(customerResult.message);
 
 
-                const orderItemResponse = await fetch('save_order_items.php', {
+                const orderItemResponse = await fetch('saveOrderItems.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

@@ -292,7 +292,7 @@ function closeModal() {
 }
 
 function openModal(orderId) {
-   fetch('get_order_items.php?order_id=' + orderId)
+   fetch('getOrderItems.php?order_id=' + orderId)
        .then(response => response.json())
        .then(data => {
            updateModalContent(data);
