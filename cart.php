@@ -56,6 +56,11 @@ $hasItems = false;
                 if ($result && $result->num_rows > 0) {
                     $hasItems = true;
                 }
+
+                if (!$hasItems) {
+                    echo '<p class="cart-empty">Your cart is empty.</p>';
+                }
+
                 while ($row = $result->fetch_assoc()) { ?>
                     <div class="cart-card" style="position: relative; min-height: 380px;">
                         <div class="product-info">
@@ -105,7 +110,7 @@ $hasItems = false;
                 <div class="step-content active" id="step1">
                     <h2>Contact Information</h2>
                     <div class="form-group">
-                        <input type="text" id="phone" placeholder="Phone Number" required>
+                        <input type="text" id="phone" placeholder="Phone Number" required autocomplete="off">
                         <input type="email" id="email" placeholder="Email" required>
                     </div>
                     <button class="next-btn" data-next="2">Next <i class="fas fa-arrow-right"></i></button>
@@ -115,7 +120,7 @@ $hasItems = false;
                 <div class="step-content" id="step2">
                     <h2>Shipping Address</h2>
                     <div class="form-group">
-                        <input type="text" id="fullName" placeholder="Full Name" required>
+                        <input type="text" id="fullName" placeholder="Full Name" required >
                         <input type="text" id="address" placeholder="Street Address" required>
                         <div class="address-grid">
                             <input type="text" id="city" placeholder="City" required>
@@ -163,253 +168,6 @@ $hasItems = false;
 </footer>
 
 </html>
-<style>
-    .remove-btn {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .quantity-controls {
-        position: absolute;
-        bottom: 55px;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .product-price {
-        position: absolute;
-        bottom: 22%;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .cart-card img {
-        position: absolute;
-        bottom: 50%;
-        left: 50%;
-        transform: translate(-50%, 50%);
-    }
-
-    .cart-summary h2 {
-        font-size: 2.5em;
-        color: #333;
-        padding: 20px;
-    }
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    button:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-    }
-
-    button:disabled:hover {
-        background-color: #cccccc;
-    }
-
-    .proceed-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #c70000;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        margin: 20px 0;
-    }
-
-    .proceed-btn:hover {
-        background-color: #c70000;
-    }
-
-    .checkout-info {
-        color: #666;
-        margin-top: 10px;
-    }
-
-    .checkout-steps {
-        width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .steps-indicator {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 30px;
-        position: relative;
-    }
-
-    .steps-indicator::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background: #ddd;
-        z-index: 1;
-    }
-
-    .step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: relative;
-        z-index: 2;
-        background: white;
-        padding: 0 15px;
-    }
-
-    .step i {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: #ddd;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 5px;
-    }
-
-    .step.active i {
-        background: #c70000;
-    }
-
-    .step-content {
-        display: none;
-        padding: 20px;
-    }
-
-    .step-content.active {
-        display: block;
-    }
-
-    .form-group {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-bottom: 20px;
-    }
-
-    .form-group input {
-        padding: 12px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
-    .address-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 10px;
-    }
-
-    .buttons-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
-
-    .next-btn,
-    .back-btn,
-    .confirm-btn {
-        padding: 12px 24px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .next-btn,
-    .confirm-btn {
-        background: #c70000;
-        color: white;
-    }
-
-    .back-btn {
-        background: #f5f5f5;
-        color: #333;
-    }
-
-    .payment-options {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-top: 20px;
-    }
-
-    .payment-option {
-        display: flex;
-        align-items: center;
-        padding: 15px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .payment-option input {
-        margin-right: 15px;
-    }
-
-    .option-content {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .success-message {
-        text-align: center;
-        padding: 30px;
-    }
-
-    .success-message i {
-        font-size: 60px;
-        color: #c70000;
-        margin-bottom: 20px;
-    }
-</style>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         // Step 1 validation
