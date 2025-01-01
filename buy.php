@@ -88,7 +88,6 @@ robot ioname="viewport" content="width=device-width, initial-scale=1.0" />
                 ?>
 
                 <script>
-
                     const show = () => {
                         if (document.getElementById('dropdown-menu').style.display != "block") {
                             document.getElementById('dropdown-menu').style.display = "block";

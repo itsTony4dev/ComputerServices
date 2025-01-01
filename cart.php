@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['is_logged_in']) || $_SESSION['is_logged_in'] !== true) {
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 $total = 0;
 $hasItems = false;
 ?>
@@ -263,7 +268,7 @@ $hasItems = false;
 
                 const orderId = orderResult.order_id;
 
-                const orderData = {
+                const customerDetails = {
                     phone: document.getElementById('phone').value,
                     email: document.getElementById('email').value,
                     fullName: document.getElementById('fullName').value,
@@ -280,7 +285,7 @@ $hasItems = false;
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(orderData)
+                    body: JSON.stringify(customerDetails)
                 });
 
                 const customerResult = await customerResponse.json();

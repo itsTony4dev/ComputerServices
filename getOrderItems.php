@@ -5,6 +5,14 @@ require_once 'connection.php';
 $order_id = $_GET['order_id'];
 $user_id = $_SESSION['user_id'];
 
+if (!isset($order_id) || !isset($user_id)) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Invalid data'
+    ]);
+    exit;
+}
+
 $stmt = $conn->prepare("SELECT oi.*, p.name, p.image, p.price 
                        FROM orders_items oi
                        JOIN products p ON oi.product_id = p.id
@@ -17,7 +25,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $items = [];
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
     $items[] = $row;
 }
 
