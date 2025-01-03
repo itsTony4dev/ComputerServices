@@ -11,7 +11,6 @@ while ($row = mysqli_fetch_array(result: $res)) {
     $data[] = $row;
 }
 $json_data = json_encode(value: $data);
-
 ?>
 
 
@@ -88,7 +87,7 @@ $json_data = json_encode(value: $data);
 
             var components = <?= $json_data; ?>;
 
-            // Helper function to create component card HTML
+           
             function createComponentCard(component) {
                 const card = document.createElement('div');
                 card.classList.add('component-card');
@@ -103,7 +102,7 @@ $json_data = json_encode(value: $data);
             }
 
 
-            // Function to render component cards
+            
             function renderComponents(sortOption) {
                 componentList.innerHTML = '';
 
@@ -128,10 +127,9 @@ $json_data = json_encode(value: $data);
                 });
             }
 
-            // Initial render
+            
             renderComponents();
 
-            // Event listener for sort select
             sortSelect.addEventListener('change', (event) => {
                 const sortOption = event.target.value;
                 renderComponents(sortOption)

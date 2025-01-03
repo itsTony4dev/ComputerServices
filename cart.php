@@ -175,7 +175,7 @@ $hasItems = false;
 </html>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // Step 1 validation
+       
         const step1Inputs = ['phone', 'email'];
         const step1Button = document.querySelector('#step1 .next-btn');
 
@@ -186,7 +186,7 @@ $hasItems = false;
             });
         });
 
-        // Step 2 validation
+       
         const step2Inputs = ['fullName', 'address', 'city', 'state'];
         const step2Button = document.querySelector('#step2 .next-btn');
 
@@ -197,7 +197,7 @@ $hasItems = false;
             });
         });
 
-        // Initially disable buttons
+       
         step1Button.disabled = true;
         step2Button.disabled = true;
     });

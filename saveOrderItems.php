@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $order_id = $data['orderId'];
     $user_id = $_SESSION['user_id'];
 
-    // Use the same SELECT query from cart.php
+
     $stmt = "SELECT `cart`.*, `products`.`name`, `products`.`price` FROM `cart` 
              JOIN `products` ON `cart`.`product_id` = `products`.`id` 
              WHERE `user_id` = $user_id";
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result) {
         $success = true;
 
-        // Prepare the insert statement for order items
+
         $insert_stmt = $conn->prepare("INSERT INTO `orders_items`( `order_id`, `product_id`, `quantity`, `price`)
                                              VALUES (?,?,?,?)");
 
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if ($success) {
-            // Clear the cart after successful order
+
             $delete_stmt = $conn->prepare("DELETE FROM `cart` WHERE `user_id` = ?");
             $delete_stmt->bind_param('i', $user_id);
             $delete_stmt->execute();
