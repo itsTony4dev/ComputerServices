@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="scroll-behavior: smooth; overflow-x:hidden" >
+<html lang="en" style="scroll-behavior: smooth; overflow-x:hidden">
 
 <head>
     <meta charset="UTF-8" />
@@ -24,7 +24,7 @@
                     <li><a href="home.php#buy-Build">Buy</a></li>
                     <li><a href="home.php#contact">Repair</a></li>
                     <?php session_start();
-                    if ($_SESSION['is_logged_in']) {
+                    if (isset($_SESSION["is_logged_in"]) && $_SESSION["is_logged_in"]) {
                         echo '<li class="dropdown">
                     <a href="#" onclick="show()">' . $_SESSION['name'] . '</a>
                     <ul class="dropdown-menu" id="dropdown-menu">
@@ -51,17 +51,17 @@
             <h2>PC Services</h2>
             <div class="service-cards">
                 <div class="service-card">
-                    <img src="pictures/home.webp" alt="Hardware Repair" style="width: 300px; height: 168px" loading="lazy"/>
+                    <img src="pictures/home.webp" alt="Hardware Repair" style="width: 300px; height: 168px" loading="lazy" />
                     <h3>Hardware Repair</h3>
                     <p>Our technicians can fix any hardware issues with your PC.</p>
                 </div>
                 <div class="service-card">
-                    <img src="pictures/buildOrBuy.webp" alt="Data Recovery" style="width: 300px; height: 168px" loading="lazy"/>
+                    <img src="pictures/buildOrBuy.webp" alt="Data Recovery" style="width: 300px; height: 168px" loading="lazy" />
                     <h3>PC & PC Parts</h3>
                     <p>Buy a pre-built pc or get your brand new parts with the best prices.</p>
                 </div>
                 <div class="service-card">
-                    <img src="pictures/gpu.webp" alt="Software Repair" style="width: 300px; height: 168px" loading="lazy"/>
+                    <img src="pictures/gpu.webp" alt="Software Repair" style="width: 300px; height: 168px" loading="lazy" />
                     <h3>Software Repair</h3>
                     <p>
                         We can resolve software-related problems and optimize your system.
@@ -74,13 +74,13 @@
             <h2>Pcs and Parts</h2>
             <div class="buy-Build-cards">
                 <div class="buy-Build-card">
-                    <img src="pictures/R.jpeg" alt="Buy PC" style="width: 300px; height: 168px" loading="lazy"/>
+                    <img src="pictures/R.jpeg" alt="Buy PC" style="width: 300px; height: 168px" loading="lazy" />
                     <h3>Pre-built PC</h3>
                     <p>Browse our selection of pre-built PCs at affordable prices.</p>
                     <button class="btn"><a href="buy.php">Browse PCs</a></button>
                 </div>
                 <div class="buy-Build-card">
-                    <img src="pictures/Build.jpeg" alt="Build PC" loading="lazy"/>
+                    <img src="pictures/Build.jpeg" alt="Build PC" loading="lazy" />
                     <h3>Available Parts</h3>
                     <p>Build your PC or get your parts at the best prices.</p>
                     <button class="btn"><a href="build.php">Browse Parts</a></button>
